@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import connection
-from .SQL_Queries import *
+from .Execute_SQL_Queries import *
 
 # Create your views here.
 
@@ -13,8 +13,6 @@ def emp_login(request):
 def HomePage(request):
     e_id = request.GET.get('e_id')
     employee_type = db.ident_employee_type(e_id)
-
-    print(employee_type[0])
     if employee_type:
         if employee_type == 'd':
             return render(request, 'hms/doctor.html')
@@ -25,3 +23,16 @@ def HomePage(request):
     else:
         context = {'emp':e_id}
         return render(request, 'hms/login.html', context )
+
+
+#-------------------------------------------------------
+#Admin HomePage
+#-------------------------------------------------------
+
+
+
+def Register_Doctor(request):
+    result = db.register_new_doctor(request.POST)
+    message = result
+    context = {'message':message}
+    return render(request, 'hms/admin.html', context)

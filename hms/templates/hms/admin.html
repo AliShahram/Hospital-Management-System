@@ -2,10 +2,43 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="alert alert-success">
+        <h5>Admins's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="alert, alert-danger box">
+      {% if message %}
+      <h6>{{message}}</h6>{
+      {% endif %}
+    </div>
+  </div>
 
-
-<div class="alert alert-success">
-  <h5>Admin's Interface</h5>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="box">
+        <h6>Register Doctor</h6>
+        <form class="form-group" action="Register_Doctor" method="post">
+          {% csrf_token %}
+          First Name: <input class="form-control" type="text" name="f_name" value=""><br>
+          Last Name: <input class="form-control" type="text" name="l_name" value=""><br>
+          DOB: <input class="form-control" type="text" name="dob" value="yyyy-mm-dd"><br>
+          Address: <input class="form-control" type="text" name="address" value=""><br>
+          Email: <input class="form-control" type="text" name="email" value=""><br>
+          Phone: <input class="form-control" type="text" name="phone" value=""><br>
+          Consultation Fee: <input class="form-control" type="text" name="consult_fee" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 
