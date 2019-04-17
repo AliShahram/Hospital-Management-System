@@ -1,0 +1,23 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="login-form">
+  <div class="message">
+    {% if emp %}
+      <h6>Employee with ID: {{emp}} does not exist</h6>
+    {% endif %}
+  </div>
+  <h6>Enter Employee ID</h6>
+  <form action="HomePage" method="get">
+    <input type="text" name="e_id" value="">
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+
+  {{ employee_type }}
+</div>
+
+
+{% endblock %}
