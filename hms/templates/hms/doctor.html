@@ -2,24 +2,76 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-  <div class="alert alert-success">
-    <h5>Doctor's Interface</h5>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="alert alert-success">
+        <h5>Doctor's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-5 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+    </div>
+
+
+  <div class="col-sm-4">
+    <div class="class="box">
+      <h6>Look up a Patient</h6>
+      <form class="form-group" action="Register_Doctor" method="post">
+        {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
+        <button class="alert alert-danger" type="submit" name="button">Look-Up</button>
+      </form>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-2 title">
-    <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+
+  <div class="col-sm-4">
+    <div class="box">
+      <h6>Add Operation Procedure</h6>
+      <form class="form-group" action="Register_Doctor" method="post">
+        {% csrf_token %}
+        Date of Procedure : <input type="date" name="OperationDate"><br><br>
+        Select operation:
+        <select class="" name="">
+          <option>Operation 1</option>
+          <option> Operation 2</option>
+        </select><br><br>
+        <button class="alert alert-danger" type="submit" name="button">Add</button>
+      </form>
+    </div>
   </div>
-</div>
-<div class="row">
-  <a href="{% url 'operate' %}"> Operate</a>
-  <a href="{% url 'prescribe' %}"> Prescribe</a>
-  <a href="{% url 'test' %}"> Test</a>
 
-</div>
+  <div class="col-sm-4">
+    <div class="box">
+      <h6>Add Prescription</h6>
+      <form class="form-group" action="Register_Doctor" method="post">
+        {% csrf_token %}
+        Date of Procedure : <input type="date" name="PrescriptionDate"><br><br>
+        Select Medicine:
+        <select class="" name="">
+          <option>Meds 1</option>
+          <option> Meds 2</option>
+        </select><br><br>
+        <button class="alert alert-danger" type="submit" name="button">Add</button>
+      </form>
+    </div>
+  </div>
 
-
+  <div class="col-sm-4">
+    <div class="box">
+      <h6>Add Tests</h6>
+      <form class="form-group" action="Register_Doctor" method="post">
+        {% csrf_token %}
+        Date of Procedure : <input type="date" name="PrescriptionDate"><br><br>
+        Select a Test:
+        <select class="" name="">
+          <option>Test 1</option>
+          <option> Tests 2</option>
+        </select><br><br>
+        <button class="alert alert-danger" type="submit" name="button">Add</button>
+      </form>
+    </div>
+  </div>
 
 
 {% endblock %}
