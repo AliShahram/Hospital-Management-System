@@ -6,6 +6,5 @@ from . import views
 urlpatterns = [
     path('', views.emp_login, name='login'),
     url(r'^HomePage$', views.HomePage, name='HomePage'),
-    path('', views.receptionist_table_choice, name='receptionist_table_choice'),
-    url(r'^ReceptionistTableChoice$', views.ReceptionistTableChoice, name='ReceptionistTableChoice'),
+    url(r'^Register_Doctor$', views.Register_Doctor, name='Register_Doctor'),
 ]
