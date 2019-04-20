@@ -10,6 +10,15 @@ db = Database()
 def emp_login(request):
     return render(request, 'hms/login.html')
 
+def Admin_Staff(request):
+    return render(request, 'hms/admin_staff.html')
+
+def Admin_Medicine(request):
+    return render(request, 'hms/admin_medicine.html')
+
+def Admin_Logistics(request):
+    return render(request, 'hms/admin_logistics.html')
+
 def HomePage(request):
     e_id = request.GET.get('e_id')
     employee_type = db.ident_employee_type(e_id)
@@ -19,7 +28,7 @@ def HomePage(request):
         elif employee_type == 'r':
             return render(request, 'hms/receptionist.html')
         elif employee_type == 'a':
-            return render(request, 'hms/admin.html')
+            return render(request, 'hms/admin_staff.html')
     else:
         context = {'emp':e_id}
         return render(request, 'hms/login.html', context )

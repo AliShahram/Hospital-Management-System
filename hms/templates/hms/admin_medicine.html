@@ -1,0 +1,79 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="alert alert-success">
+        <h5>Admin's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-6 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+      <a class="alert alert-danger"href="{% url 'Admin_Staff' %}">Staff</a>
+      <a class="alert alert-danger"href="{% url 'Admin_Logistics' %}">Logistics</a>
+      <a class="alert alert-danger"href="{% url 'Admin_Medicine' %}">Medicine</a>
+    </div>
+  </div>
+  <div class="row">
+    {% if message %}
+      <div class="alert, alert-danger box">
+        <h6>{{message}}</h6>{
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="box">
+        <h6>Insert Operation</h6>
+          <form class="form-group" action="Register_Doctor" method="post">
+          {% csrf_token %}
+          Name: <input class="form-control" type="text" name="name" value=""><br>
+          Cost: <input class="form-control" type="text" name="cost" value=""><br>
+          Room: <input class="form-control" type="text" name="room" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="box">
+        <h6>Insert Medicine</h6>
+        <form class="form-group" action="Register_Doctor" method="post">
+          {% csrf_token %}
+          Name: <input class="form-control" type="text" name="name" value=""><br>
+          Cost: <input class="form-control" type="text" name="cost" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="box">
+        <h6>Insert Test</h6>
+        <form class="form-group" action="Register_Doctor" method="post">
+            {% csrf_token %}
+            Name: <input class="form-control" type="text" name="name" value=""><br>
+            Cost: <input class="form-control" type="text" name="cost" value=""><br>
+            <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="class="box">
+        <h6>Update Medical Cost</h6>
+          <form class="form-group" action="Register_Doctor" method="post">
+            {% csrf_token %}
+            <input type="radio" name="medical" value="medicine"> Medicine<br>
+            <input type="radio" name="medical" value="operation"> Operation<br>
+            <input type="radio" name="medical" value="test"> Test<br>
+            ID: <input class="form-control" type="text" name="m_id" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
