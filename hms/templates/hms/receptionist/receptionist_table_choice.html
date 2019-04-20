@@ -1,0 +1,54 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<h2>What table do you want to change?</h2>
+<div class="Table-Choice">
+  <div class="Table-Choice">
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Patient">
+     </form>
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Visit">
+      </form>
+
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Appointment">
+    </form>
+
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Consultation">
+    </form>
+
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Admission">
+    </form>
+
+
+  </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="alert alert-success">
+  <h5>Receptionist's Interface</h5>
+  <h5> Admission Info</h5>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      Create Admission
+      <div class="row">
+          <div class="box">
+            <form class="form-group" action="#" method="post">
+              Admission ID: <input class="form-control" type="text" name="ad_id" value=""><br>
+              Name: <input class="form-control" type="text" name="name" value=""><br>
+              Address: <input class="form-control" type="text" name="address" value=""><br>
+              Contact: <input class="form-control" type="text" name="contact" value=""><br>
+              E-mail: <input class="form-control" type="text" name="email" value=""><br>
+              <button class="alert alert-danger" type="submit" name="button">Submit</button>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      Update Admission
+      <div class="col-sm">
+        <div class="row">
+            <div class="box">
+              <form class="form-group" action="#" method="post">
+                Info Being Changed: <input class="form-control" type="text" name="change_col" value=""><br>
+                New Value: <input class="form-control" type="text" name="new_val" value=""><br>
+                Admission ID: <input class="form-control" type="text" name="ad_id" value=""><br>
+                <button class="alert alert-danger" type="submit" name="button">Submit</button>
+              </form>
+            </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm">
+      Delete Admission
+      <div class="row">
+          <div class="box">
+            <form class="form-group" action="#" method="post">
+              Admission ID: <input class="form-control" type="text" name="ad_id" value=""><br>
+              <button class="alert alert-danger" type="submit" name="button">Submit</button>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
