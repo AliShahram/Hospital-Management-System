@@ -40,9 +40,13 @@ def test(request):
 #-------------------------------------------------------
 
 
-
 def Register_Doctor(request):
-    result = db.register_new_doctor(request.POST)
-    message = result
+    if request.POST:
+        result = db.register_new_doctor(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
     context = {'message':message}
     return render(request, 'hms/admin.html', context)

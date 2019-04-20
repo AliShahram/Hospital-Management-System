@@ -12,7 +12,7 @@ CREATE_EMP_DOC_ADMIN_RECEP = """
 
 
     CREATE TABLE doctor(
-        d_id SERIAL,
+        d_id INT,
         f_name VARCHAR(64),
         l_name VARCHAR(64),
         dob DATE,
@@ -26,7 +26,7 @@ CREATE_EMP_DOC_ADMIN_RECEP = """
 
 
     CREATE TABLE receptionist(
-        r_id SERIAL,
+        r_id INT,
         f_name VARCHAR(64),
         l_name VARCHAR(64),
         dob DATE,
@@ -39,7 +39,7 @@ CREATE_EMP_DOC_ADMIN_RECEP = """
 
 
     CREATE TABLE admin(
-        a_id SERIAL,
+        a_id INT,
         f_name VARCHAR(64),
         l_name VARCHAR(64),
         dob DATE,
