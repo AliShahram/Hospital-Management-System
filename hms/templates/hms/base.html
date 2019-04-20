@@ -18,23 +18,22 @@
   <main>
     <div class="container-fluid">
       <div class="row header">
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="header-title">
             <h1>Hospital Management System</h1>
           </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="header-title">
             <h3>Database Design Project</h3>
           </div>
         </div>
-        <div class="col-sm-2 title">
-          <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
-        </div>
       </div>
       <div class="container">
+        <div class="row">
           {% block content %}
           {% endblock %}
+        </div>
       </div>
     </div>
   </main>

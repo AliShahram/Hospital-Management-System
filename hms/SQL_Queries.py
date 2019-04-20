@@ -1,22 +1,24 @@
-from django.db import connection
 
-class Database:
-    def __init__(self):
-        self.cursor = connection.cursor()
+ident_employee_type = """
 
-    def execute(self, statement, param):
-        self.cursor.execute(statement, [param])
-        row = self.cursor.fetchone()
-        result = row[0]
-        return result
+        SELECT type FROM employee
+        WHERE e_id = %s
+    """
 
 
-    def ident_employee_type(self, e_id):
-        SELECT_STATEMENT = """SELECT type FROM employee
-                              WHERE e_id = %s
-                            """
-        try:
-            result = self.execute(SELECT_STATEMENT, e_id)
-        except:
-            result = None
-        return result
+register_new_doctor = """
+
+        BEGIN;
+        INSERT INTO employee (type, e_status)
+        VALUES('d', '1');
+
+        INSERT INTO doctor (f_name,
+                            l_name,
+                            dob,
+                            address,
+                            email,
+                            phone,
+                            consult_fee)
+        VALUES (%s, %s, %s, %s, %s, %s, %s);
+        COMMIT;
+"""
