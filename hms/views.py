@@ -42,8 +42,7 @@ def ReceptionistTableChoice(request):
     else:
         return render(request, 'hms/receptionist/receptionist_patient.html')
         
-#    path('', views.receptionist_table_choice, name='receptionist_table_choice'),
-#url(r'^ReceptionistTableChoice$', views.ReceptionistTableChoice, name='ReceptionistTableChoice'),
+
 # def UpdatePatient(request):
 #     p_id = request.Get.get("p_id")
 #     return render(request, 'hms/receptionist/receptionist_update_patient.html')
