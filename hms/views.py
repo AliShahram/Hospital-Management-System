@@ -24,6 +24,16 @@ def HomePage(request):
         context = {'emp':e_id}
         return render(request, 'hms/login.html', context )
 
+def operate(request):
+    return render(request, 'hms/operate.html')
+
+def prescribe(request):
+    return render(request, 'hms/prescribe.html')
+
+def test(request):
+    return render(request, 'hms/test.html')
+
+
 
 #-------------------------------------------------------
 #Admin HomePage
