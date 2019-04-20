@@ -102,3 +102,24 @@ class Database(Tools):
         else:
             result = ("Error while inserting employee", success)
         return result
+
+
+
+    def register_new_recep(self, form):
+        success = self.register_new_employee('r')
+        if success == True:
+            id = self.get_recent_emp_id()
+            param = self.process_form(form)
+            param.insert(0, id)
+
+            INSERT_RECEP = register_new_recep
+
+            try:
+                self.execute_insert(INSERT_RECEP, param)
+                result = "Insertion Successful"
+            except (Exception, pg2.DatabaseError) as error:
+                result = ("Error while inserting Receptionist: ", error)
+
+        else:
+            result = ("Error while inserting employee", success)
+        return result

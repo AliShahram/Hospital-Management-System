@@ -40,3 +40,16 @@ def Register_Doctor(request):
 
     context = {'message':message}
     return render(request, 'hms/admin.html', context)
+
+
+
+def Register_Recep(request):
+    if request.POST:
+        result = db.register_new_recep(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/admin.html', context)

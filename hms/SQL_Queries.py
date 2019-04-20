@@ -15,8 +15,6 @@ get_recent_emp_id = """
     FROM employee;
     """
 
-
-
 register_new_doctor = """
         INSERT INTO doctor (d_id,
                             f_name,
@@ -27,4 +25,16 @@ register_new_doctor = """
                             phone,
                             consult_fee)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+        """
+
+
+register_new_recep = """
+        INSERT INTO receptionist (r_id,
+                            f_name,
+                            l_name,
+                            dob,
+                            address,
+                            email,
+                            phone)
+        VALUES (%s, %s, %s, %s, %s, %s, %s);
         """
