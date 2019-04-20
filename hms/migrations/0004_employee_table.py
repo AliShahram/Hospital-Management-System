@@ -2,8 +2,7 @@
 
 from django.db import migrations
 from django.db import connection
-
-from ..create_tables import *
+from ..SQL_Create_Table import *
 
 def make_trigger(apps,schema_editor):
 
