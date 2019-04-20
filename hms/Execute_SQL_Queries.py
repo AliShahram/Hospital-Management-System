@@ -59,3 +59,27 @@ class Database(Tools):
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
+
+
+    def create_room(self, form):
+        param = self.process_form(form)
+        CREATE_STATEMENT = create_room
+
+        try:
+            self.cursor.execute(CREATE_STATEMENT, param)
+            result = "Insertion Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while inserting into PostgreSQL table", error)
+        return result
+
+
+    def insert_new_operation(self, form):
+        param = self.process_form(form)
+        INSERT_STATEMENT = insert_new_operation
+
+        try:
+            self.cursor.execute(INSERT_STATEMENT, param)
+            result = "Insertion Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while inserting into PostgreSQL table", error)
+        return result

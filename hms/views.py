@@ -35,7 +35,7 @@ def HomePage(request):
 
 
 #-------------------------------------------------------
-#Admin HomePage
+#Admin Staff Page
 #-------------------------------------------------------
 
 
@@ -48,4 +48,39 @@ def Register_Doctor(request):
         message = None
 
     context = {'message':message}
-    return render(request, 'hms/admin.html', context)
+    return render(request, 'hms/admin_staff.html', context)
+
+
+#-------------------------------------------------------
+#Admin Logistics Page
+#-------------------------------------------------------
+
+
+def Create_Room(request):
+    print(request.POST)
+    if request.POST:
+        result = db.create_room(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/admin_logistics.html', context)
+
+
+#-------------------------------------------------------
+#Admin Medical Page
+#-------------------------------------------------------
+
+
+def Insert_Operation(request):
+    if request.POST:
+        result = db.insert_new_operation(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/admin_medicine.html', context)

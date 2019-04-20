@@ -53,37 +53,38 @@ CREATE_EMP_DOC_ADMIN_RECEP = """
 """
 
 
-create_table_room = """
+create_aleks_work = """
+    BEGIN;
+
     CREATE TABLE room(
-    r_id SERIAL,
-    type VARCHAR(64),
-    cost REAL,
-)"""
+        r_id SERIAL,
+        type VARCHAR(64),
+        cost REAL,
+        status VARCHAR(1),
+    );
 
 
-"""
-CREATE TABLE medicine(
-    m_id SERIAL,
-    name VARCHAR(64),
-    cost REAL,
-    r_id SERIAL,
-    FOREIGN KEY (r_id) REFERENCES room(r_id)
-);
+    CREATE TABLE medicine(
+        m_id SERIAL,
+        name VARCHAR(64),
+        cost REAL,
+    );
 
 
-CREATE TABLE operation(
-    o_id SERIAL,
-    name VARCHAR(64),
-    cost REAL,
-);
+    CREATE TABLE operation(
+        o_id SERIAL,
+        name VARCHAR(64),
+        cost REAL,
+        r_id INT,
+        FOREIGN KEY (r_id) REFERENCES room(r_id),
+    );
 
 
-CREATE TABLE test(
-    t_id SERIAL,
-    name VARCHAR(64),
-    cost REAL,
-);
+    CREATE TABLE test(
+        t_id SERIAL,
+        name VARCHAR(64),
+        cost REAL,
+    );
 
-
-
+    COMMIT;
 """
