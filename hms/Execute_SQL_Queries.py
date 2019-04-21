@@ -121,5 +121,5 @@ class Database(Tools):
                 result = ("Error while inserting Receptionist: ", error)
 
         else:
-            result = ("Error while inserting employee", success)
+            result = ("Error while inserting employee table", success)
         return result
