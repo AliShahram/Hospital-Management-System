@@ -12,11 +12,15 @@ class Tools:
 
     def process_form(self, form):
         result = []
-        count = 0
-        for key, value in form.items():
-            if count != 0 and key != 'button':
-                result.append(value)
-            count += 1
+        keys = []
+        dict = form.dict()
+        for key in dict:
+            if key[0].isdigit():
+                keys.append(key)
+        keys.sort()
+        for key in keys:
+            value = dict[key]
+            result.append(value)
         return result
 
 
@@ -73,9 +77,32 @@ class Database(Tools):
         return result
 
 
-    def insert_new_operation(self, form):
+    def insert_operation(self, form):
         param = self.process_form(form)
-        INSERT_STATEMENT = insert_new_operation
+        INSERT_STATEMENT = insert_operation
+
+        try:
+            self.cursor.execute(INSERT_STATEMENT, param)
+            result = "Insertion Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while inserting into PostgreSQL table", error)
+        return result
+
+
+    def insert_medicine(self, form):
+        param = self.process_form(form)
+        INSERT_STATEMENT = insert_medicine
+
+        try:
+            self.cursor.execute(INSERT_STATEMENT, param)
+            result = "Insertion Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while inserting into PostgreSQL table", error)
+        return result
+
+    def insert_test(self, form):
+        param = self.process_form(form)
+        INSERT_STATEMENT = insert_test
 
         try:
             self.cursor.execute(INSERT_STATEMENT, param)

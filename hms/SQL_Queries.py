@@ -23,18 +23,26 @@ register_new_doctor = """
         COMMIT;
 """
 
-insert_new_operation = """
-
-        BEGIN;
-
-        INSERT INTO operation (name, cost, r_id)
-        VALUES (%s, %s, %s);
-
-        COMMIT;
-"""
-
 create_room = """
 
         INSERT INTO room (type, cost, status)
         VALUES (%s, %s, %s);
+"""
+
+insert_operation = """
+
+        INSERT INTO operation (name, cost, r_id)
+        VALUES (%s, %s, %s);
+"""
+
+insert_medicine = """
+
+        INSERT INTO medicine (name, cost)
+        VALUES (%s, %s);
+"""
+
+insert_test = """
+
+        INSERT INTO test (name, cost)
+        VALUES (%s, %s);
 """

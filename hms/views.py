@@ -57,7 +57,6 @@ def Register_Doctor(request):
 
 
 def Create_Room(request):
-    print(request.POST)
     if request.POST:
         result = db.create_room(request.POST)
         message = result
@@ -76,7 +75,31 @@ def Create_Room(request):
 
 def Insert_Operation(request):
     if request.POST:
-        result = db.insert_new_operation(request.POST)
+        result = db.insert_operation(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/admin_medicine.html', context)
+
+
+def Insert_Medicine(request):
+    if request.POST:
+        result = db.insert_medicine(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/admin_medicine.html', context)
+
+
+def Insert_Test(request):
+    if request.POST:
+        result = db.insert_test(request.POST)
         message = result
 
     if request.GET:
