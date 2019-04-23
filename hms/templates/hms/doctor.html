@@ -28,8 +28,9 @@
   <div class="col-sm-4">
     <div class="box">
       <h6>Add Operation Procedure</h6>
-      <form class="form-group" action="Register_Doctor" method="post">
+      <form class="form-group" action="register_opeartion" method="post">
         {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
         Date of Procedure : <input type="date" name="OperationDate"><br><br>
         Select operation:
         <select class="" name="">
@@ -44,8 +45,9 @@
   <div class="col-sm-4">
     <div class="box">
       <h6>Add Prescription</h6>
-      <form class="form-group" action="Register_Doctor" method="post">
+      <form class="form-group" action="register_prescription" method="post">
         {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
         Date of Procedure : <input type="date" name="PrescriptionDate"><br><br>
         Select Medicine:
         <select class="" name="">
@@ -60,8 +62,9 @@
   <div class="col-sm-4">
     <div class="box">
       <h6>Add Tests</h6>
-      <form class="form-group" action="Register_Doctor" method="post">
+      <form class="form-group" action="register_test" method="post">
         {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
         Date of Procedure : <input type="date" name="PrescriptionDate"><br><br>
         Select a Test:
         <select class="" name="">

@@ -45,3 +45,39 @@ def Register_Doctor(request):
 def medical_history(request):
 
     return(request, '', )
+
+def register_operation(request):
+
+    if request.POST:
+        result = db.register_opeartion(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/doctor.html', context)
+
+def register_prescription(request):
+
+    if request.POST:
+        result = db.register_prescription(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/doctor.html', context)
+
+def register_testing(request):
+    
+    if request.POST:
+        result = db.register_testing(request.POST)
+        message = result
+
+    if request.GET:
+        message = None
+
+    context = {'message':message}
+    return render(request, 'hms/doctor.html', context)
