@@ -10,10 +10,12 @@ register_new_employee = """
     VALUES (%s, '1')
     """
 
+
 get_recent_emp_id = """
     SELECT max(e_id)
     FROM employee;
     """
+
 
 register_new_doctor = """
         INSERT INTO doctor (d_id,
