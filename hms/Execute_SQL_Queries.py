@@ -40,8 +40,7 @@ class Database(Tools):
     def execute_select_param(self, statement, param):
         self.cursor.execute(statement, [param])
         row = self.cursor.fetchone()
-        result = row[0]
-        return result
+        return row
 
 
     def execute_insert(self, statement, param):
@@ -57,6 +56,7 @@ class Database(Tools):
         SELECT_STATEMENT = ident_employee_type
         try:
             result = self.execute_select_param(SELECT_STATEMENT, e_id)
+            result = result[0]
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error: ", error)
         return result
@@ -123,3 +123,35 @@ class Database(Tools):
         else:
             result = ("Error while inserting employee table", success)
         return result
+
+
+
+
+    def get_employee_info(self, form):
+        param = self.process_form(form)
+        e_id = param[0]
+        emp_type = self.ident_employee_type(e_id)
+
+        if emp_type == 'd':
+            SELECT_STATEMENT = get_doctor_info
+        elif emp_type == 'r':
+            SELECT_STATEMENT = get_receptionist_info
+
+        try:
+            result = self.execute_select_param(SELECT_STATEMENT, e_id)
+            message = "Success: employee information retrieved"
+
+        except (Exception, pg2.DatabaseError) as error:
+            result = None
+            message = 'Failure: employee does not exist'
+        return result, message
+
+
+def update_employee_info(self, form):
+    param = self.process_form(form)
+    print(param)
+
+
+
+def delete_employee(self, form):
+    pass

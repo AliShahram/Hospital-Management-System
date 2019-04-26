@@ -40,3 +40,17 @@ register_new_recep = """
                             phone)
         VALUES (%s, %s, %s, %s, %s, %s, %s);
         """
+
+
+get_doctor_info = """
+    SELECT * FROM doctor
+    WHERE d_id = %s;
+
+    """
+
+
+get_receptionist_info = """
+    SELECT * FROM receptionist
+    WHERE r_id = %s;
+
+    """

@@ -29,7 +29,6 @@ def HomePage(request):
 #Admin HomePage
 #-------------------------------------------------------
 
-
 def Register_Doctor(request):
     if request.POST:
         result = db.register_new_doctor(request.POST)
@@ -42,7 +41,6 @@ def Register_Doctor(request):
     return render(request, 'hms/admin.html', context)
 
 
-
 def Register_Recep(request):
     if request.POST:
         result = db.register_new_recep(request.POST)
@@ -50,6 +48,26 @@ def Register_Recep(request):
 
     if request.GET:
         message = None
+
+    context = {'message':message}
+    return render(request, 'hms/admin.html', context)
+
+
+def Get_Employee_Info(request):
+    if request.POST:
+        querySet, message = db.get_employee_info(request.POST)
+
+    context = {'querySet':querySet, 'message':message}
+    return render(request, 'hms/admin.html', context)
+
+
+def Update_Employee_Info(request):
+    if request.POST:
+        if 'Update' in request.POST:
+            message = db.update_employee_info(request.POST)
+
+        elif 'Delete' in request.POST:
+            message = db.delete_employee(request.POST)
 
     context = {'message':message}
     return render(request, 'hms/admin.html', context)

@@ -59,12 +59,31 @@
     <div class="col-sm-4">
       <div class="class="box">
         <h6>Update Employee Information</h6>
-        <form class="form-group" action="Register_Doctor" method="post">
+        <form class="form-group" action="Get_Employee_Info" method="post">
           {% csrf_token %}
           Employee ID: <input class="form-control" type="text" name="e_id" value=""><br>
           <button class="alert alert-danger" type="submit" name="button">Submit</button>
         </form>
       </div>
+      {% if querySet %}
+      <div class="box">
+        <h6>Delete/Update Employee Information</h6>
+        <form class="form-group" action="Update_Employee_Info" method="post">
+          {% csrf_token %}
+          First Name: <input class="form-control" type="text" name="f_name" value="{{querySet.1}}"><br>
+          Last Name: <input class="form-control" type="text" name="l_name" value="{{querySet.2}}"><br>
+          DOB: <input class="form-control" type="text" name="dob: yyyy-mm-dd" value="{{querySet.3}}"><br>
+          Address: <input class="form-control" type="text" name="address" value="{{querySet.4}}"><br>
+          Email: <input class="form-control" type="text" name="email" value="{{querySet.5}}"><br>
+          Phone: <input class="form-control" type="text" name="phone" value="{{querySet.6}}"><br>
+          {% if querySet.7 %}
+          Consultation Fee: <input class="form-control" type="text" name="consult_fee" value="{{querySet.7}}"><br>
+          {% endif %}
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Employee</button>
+        </form>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
