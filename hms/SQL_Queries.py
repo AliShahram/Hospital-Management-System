@@ -1,4 +1,11 @@
 
+validate_employee = """
+    SELECT e_status
+    FROM employee
+    WHERE e_id = %s;
+    """
+
+
 ident_employee_type = """
         SELECT type FROM employee
         WHERE e_id = %s

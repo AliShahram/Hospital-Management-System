@@ -52,6 +52,17 @@ class Database(Tools):
 #Queries Execution
 #-------------------------------------------------------
 
+    def validate_employee(self, e_id):
+        SELECT_STATEMENT = validate_employee
+        status = self.execute_select_param(SELECT_STATEMENT, e_id)
+
+        if status == 1:
+            return True
+        else:
+            return False
+
+
+
     def ident_employee_type(self, e_id):
         SELECT_STATEMENT = ident_employee_type
         try:
