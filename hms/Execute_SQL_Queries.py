@@ -143,15 +143,48 @@ class Database(Tools):
 
         except (Exception, pg2.DatabaseError) as error:
             result = None
-            message = 'Failure: employee does not exist'
+            message = ('Failure:', error)
         return result, message
 
 
-def update_employee_info(self, form):
-    param = self.process_form(form)
-    print(param)
+    def update_employee_info(self, form):
+        param = self.process_form(form)
+        e_id = param[0]
+        param.pop(0)  # remove Id from the form
+        param.pop(-1)   # remove the empty string, created as a result of name for the button
+        param.append(e_id)
+
+        emp_type = self.ident_employee_type(e_id)
+        if emp_type == 'd':
+            UPDATE_STATEMENT = update_doctor_info
+        elif emp_type == 'r':
+            UPDATE_STATEMENT = update_receptionist_info
+
+        try:
+            self.execute_insert(UPDATE_STATEMENT, param)
+            message = "Employee information successfully updated"
+
+        except (Exception, pg2.DatabaseError) as error:
+            message = ("Error while updating employee: ", error)
+
+        return message
 
 
 
-def delete_employee(self, form):
-    pass
+
+
+    def delete_employee(self, form):
+        param = self.process_form(form)
+        e_id = param[0]
+        print(e_id)
+        emp_type = self.ident_employee_type(e_id)
+
+        DELETE_STATEMENT = delete_employee
+
+        try:
+            self.cursor.execute(DELETE_STATEMENT, [e_id])
+            message = "Employee successfuly deleted! Status = 0 "
+        except (Exception, pg2.DatabaseError) as error:
+            message = ("Error while deleting employee: ", error)
+
+        return message

@@ -45,12 +45,43 @@ register_new_recep = """
 get_doctor_info = """
     SELECT * FROM doctor
     WHERE d_id = %s;
-
     """
 
 
 get_receptionist_info = """
     SELECT * FROM receptionist
     WHERE r_id = %s;
+    """
 
+update_doctor_info = """
+    UPDATE doctor
+    SET (f_name,
+        l_name,
+        dob,
+        address,
+        email,
+        phone,
+        consult_fee) = (%s, %s, %s, %s, %s, %s, %s)
+    WHERE d_id = %s;
+    """
+
+
+
+update_receptionist_info = """
+    UPDATE receptionist
+    SET (f_name,
+        l_name,
+        dob,
+        address,
+        email,
+        phone) = (%s, %s, %s, %s, %s, %s)
+    WHERE r_id = %s;
+    """
+
+
+
+delete_employee = """
+    UPDATE employee
+    SET e_status = 0
+    WHERE e_id = %s;
     """
