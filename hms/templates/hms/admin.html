@@ -70,7 +70,7 @@
         <h6>Delete/Update Employee Information</h6>
         <form class="form-group" action="Update_Employee_Info" method="post">
           {% csrf_token %}
-          e_id: <input class="form-control" type="hidden" name="e_id" value="{{querySet.0}}"><br>
+          <input class="form-control" type="hidden" name="e_id" value="{{querySet.0}}"><br>
           First Name: <input class="form-control" type="text" name="f_name" value="{{querySet.1}}"><br>
           Last Name: <input class="form-control" type="text" name="l_name" value="{{querySet.2}}"><br>
           DOB: <input class="form-control" type="text" name="dob: yyyy-mm-dd" value="{{querySet.3}}"><br>
