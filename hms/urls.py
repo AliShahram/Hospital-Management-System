@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^Insert_Operation$', views.Insert_Operation, name='Insert_Operation'),
     url(r'^Insert_Medicine$', views.Insert_Medicine, name='Insert_Medicine'),
     url(r'^Insert_Test$', views.Insert_Test, name='Insert_Test'),
+    url(r'^Get_Room_Info$', views.Get_Room_Info, name='Get_Room_Info'),
+    url(r'^Update_Room_Info$', views.Update_Room_Info, name='Update_Room_Info'),
+    url(r'^Get_Medical_Info$', views.Get_Medical_Info, name='Get_Medical_Info'),
+    url(r'^Update_Medical_Info$', views.Update_Medical_Info, name='Update_Medical_Info'),
 ]

@@ -61,16 +61,33 @@
     </div>
     <div class="col-sm-4">
       <div class="class="box">
-        <h6>Update Medical Cost</h6>
-          <form class="form-group" action="Register_Doctor" method="post">
+        <h6>Update Medical</h6>
+          <form class="form-group" action="Get_Medical_Info" method="post">
             {% csrf_token %}
             <input type="radio" name="medical" value="medicine"> Medicine<br>
             <input type="radio" name="medical" value="operation"> Operation<br>
             <input type="radio" name="medical" value="test"> Test<br>
-            ID: <input class="form-control" type="text" name="m_id" value=""><br>
+            ID: <input class="form-control" type="text" name="1m_id" value=""><br>
           <button class="alert alert-danger" type="submit" name="button">Submit</button>
         </form>
       </div>
+      {% if querySet %}
+      <div class="box">
+        <h6>Delete/Update Medical Information</h6>
+        <form class="form-group" action="Update_Medical_Info" method="post">
+          {% csrf_token %}
+          ID: <input class="form-control" type="text" name="1id" value="{{querySet.1}}"><br>
+          <input class="form-control" type="hidden" name="2type" value="{{querySet.0}}"><br>
+          Name: <input class="form-control" type="text" name="3name" value="{{querySet.2}}"><br>
+          Cost: <input class="form-control" type="text" name="4cost" value="{{querySet.3}}"><br>
+          {% if querySet.4 %}
+            Room: <input class="form-control" type="text" name="5status" value="{{querySet.4}}"><br>
+          {% endif %}
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Room</button>
+        </form>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>

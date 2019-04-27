@@ -40,12 +40,26 @@
     <div class="col-sm-4">
       <div class="class="box">
         <h6>Update Room</h6>
-          <form class="form-group" action="Register_Doctor" method="post">
+          <form class="form-group" action="Get_Room_Info" method="post">
             {% csrf_token %}
-            ID: <input class="form-control" type="text" name="r_id" value=""><br>
+            Room ID: <input class="form-control" type="text" name="1r_id" value=""><br>
           <button class="alert alert-danger" type="submit" name="button">Submit</button>
         </form>
       </div>
+      {% if querySet %}
+      <div class="box">
+        <h6>Delete/Update Room Information</h6>
+        <form class="form-group" action="Update_Room_Info" method="post">
+          {% csrf_token %}
+          r_id: <input class="form-control" type="hidden" name="1r_id" value="{{querySet.0}}"><br>
+          Type: <input class="form-control" type="text" name="2type" value="{{querySet.1}}"><br>
+          Cost: <input class="form-control" type="text" name="3cost" value="{{querySet.2}}"><br>
+          Status: <input class="form-control" type="text" name="4status" value="{{querySet.3}}"><br>
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Room</button>
+        </form>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>

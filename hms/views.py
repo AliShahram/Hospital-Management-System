@@ -68,6 +68,26 @@ def Create_Room(request):
     return render(request, 'hms/admin_logistics.html', context)
 
 
+def Get_Room_Info(request):
+    if request.POST:
+        querySet, message = db.get_room_info(request.POST)
+
+    context = {'querySet':querySet, 'message':message}
+    return render(request, 'hms/admin_logistics.html', context)
+
+
+def Update_Room_Info(request):
+    if request.POST:
+        if 'Update' in request.POST:
+            message = db.update_room_info(request.POST)
+
+        elif 'Delete' in request.POST:
+            message = db.delete_room(request.POST)
+
+    context = {'message':message}
+    return render(request, 'hms/admin_logistics.html', context)
+
+
 #-------------------------------------------------------
 #Admin Medical Page
 #-------------------------------------------------------
@@ -107,3 +127,27 @@ def Insert_Test(request):
 
     context = {'message':message}
     return render(request, 'hms/admin_medicine.html', context)
+
+def Get_Medical_Info(request):
+    type = request.POST.get('medical')
+    if request.POST:
+        if type == "medicine":
+            querySet, message = db.get_medicine_info(request.POST)
+        if type == "operation":
+            querySet, message = db.get_operation_info(request.POST)
+        if type == "test":
+            querySet, message = db.get_test_info(request.POST)
+
+    context = {'querySet':querySet, 'message':message}
+    return render(request, 'hms/admin_medicine.html', context)
+
+def Update_Medical_Info(request):
+    if request.POST:
+        if 'Update' in request.POST:
+            message = db.update_medical_info(request.POST)
+
+        elif 'Delete' in request.POST:
+            message = db.delete_room(request.POST)
+
+    context = {'message':message}
+    return render(request, 'hms/admin_logistics.html', context)
