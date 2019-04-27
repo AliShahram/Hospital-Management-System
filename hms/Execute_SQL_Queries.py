@@ -54,7 +54,8 @@ class Database(Tools):
 
     def validate_employee(self, e_id):
         SELECT_STATEMENT = validate_employee
-        status = self.execute_select_param(SELECT_STATEMENT, e_id)
+        result = self.execute_select_param(SELECT_STATEMENT, e_id)
+        status = int(result[0])
 
         if status == 1:
             return True

@@ -6,8 +6,8 @@
 
 <div class="login-form">
   <div class="message">
-    {% if emp %}
-      <h6>Employee with ID: {{emp}} does not exist</h6>
+    {% if message %}
+      <h6>{{message}}</h6>
     {% endif %}
   </div>
   <h6>Enter Employee ID</h6>
