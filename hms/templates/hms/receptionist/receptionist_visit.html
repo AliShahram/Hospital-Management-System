@@ -1,0 +1,55 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="alert alert-success">
+  <h5>Receptionist's Interface</h5>
+  <h5>Visit Info</h5>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h6>Create Visit</h6>
+      <div class="row">
+          <div class="box">
+            <form class="form-group" action="{% url 'CreateVisit' %}" method="post">{% csrf_token %}
+              Patient_id: <input class="form-control" type="text" name="p_id" value=""><br>
+              Admission Date: <input class="form-control" type="text" name="admit_date" value="yyyy-mm-dd"><br>
+              Discharge Date: <input class="form-control" type="text" name="dis_date" value="yyyy-mm-dd"><br>
+
+              <button class="alert alert-danger" type="submit" name="button">Submit</button>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h6> View/Update/Delete Visit Information</h6>
+        <form class="form-group" action="{% url 'Get_Visit_Info' %}" method="post">
+          {% csrf_token %}
+          Visit ID: <input class="form-control" type="text" name="v_id" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+      {% if querySet %}
+      <div class="box">
+        <h6> View/Update/Delete Visit Information</h6>
+        <form class="form-group" action="{% url 'Update_Visit' %}" method="post">
+          {% csrf_token %}
+          <input class="form-control" type="hidden" name="v_id" value="{{querySet.0}}"><br>
+          Visit ID: <input class="form-control" type="text" name="v_id" value="{{querySet.0}}"><br>
+          Patient ID: <input class="form-control" type="text" name="p_id" value="{{querySet.1}}"><br>
+          Admission Date: <input class="form-control" type="text" name="admit_date" value="{{querySet.2}}"><br>
+          Discharge Date: <input class="form-control" type="text" name="dis_date" value="{{querySet.3}}"><br>
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Patient</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

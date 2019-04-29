@@ -1,0 +1,54 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="alert alert-success">
+  <h5>Receptionist's Interface</h5>
+  <h5>Admission Info</h5>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h6>Create admission</h6>
+      <div class="row">
+          <div class="box">
+            <form class="form-group" action="{% url 'Create_Admission' %}" method="post">{% csrf_token %}
+              Receptionist_ID: <input class="form-control" type="text" name="re_id" value=""><br>
+              Visit ID <input class="form-control" type="text" name="v_id" value=""><br>
+              Room Number <input class="form-control" type="text" name="ro_id" value=""><br>
+              Admission Date: <input class="form-control" type="text" name="admit_date" value="yyyy-mm-dd"><br>
+              Discharge Date: <input class="form-control" type="text" name="dis_date" value="yyyy-mm-dd"><br>
+              <button class="alert alert-danger" type="submit" name="button">Submit</button>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h6> View/Update/Delete Visit Information</h6>
+        <form class="form-group" action="{% url 'Get_Admission_Info' %}" method="post">
+          {% csrf_token %}
+          Admission ID <input class="form-control" type="text" name="ad_id" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+      {% if querySet %}
+      <div class="box">
+        <h6> View/Update/Delete Visit Information</h6>
+        <form class="form-group" action="{% url 'Update_Admission' %}" method="post">
+          {% csrf_token %}
+          <input class="form-control" type="hidden" name="v_id" value="{{querySet.0}}"><br>
+          Admission ID: <input class="form-control" type="text" name="v_id" value="{{querySet.0}}"><br>
+          Visit ID: <input class="form-control" type="text" name="p_id" value="{{querySet.1}}"><br>
+          Room Num <input class="form-control" type="text" name="admit_date" value="{{querySet.2}}"><br>
+          Admission Date: <input class="form-control" type="text" name="admit_date" value="{{querySet.3}}"><br>
+          Discharge Date: <input class="form-control" type="text" name="dis_date" value="{{querySet.4}}"><br>
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Admission</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

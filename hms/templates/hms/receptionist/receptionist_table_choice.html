@@ -1,0 +1,75 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+<html>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+      <div class="alert alert-success">
+        <h5>Receptioinst's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-8 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+      <a class="alert alert-danger"href="{% url 'Patient' %}">Patient</a>
+      <a class="alert alert-danger"href="{% url 'Visit' %}">Visit</a>
+      <a class="alert alert-danger"href="{% url 'Appointment' %}">Appointment</a>
+      <a class="alert alert-danger"href="{% url 'Consultation' %}">Consultation</a>
+      <a class="alert alert-danger"href="{% url 'Admission' %}">Admission</a>
+    </div>
+  </div>
+  <div class="row">
+    {% if message %}
+      <div class="alert, alert-danger box">
+        <h6>{{message}}</h6>
+      </div>
+    {% endif %}
+  </div>
+
+<h2>What table do you want to change?</h2>
+<div class="Table-Choice">
+  <div class="Table-Choice">
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Patient">
+     </form>
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Visit">
+      </form>
+
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Appointment">
+    </form>
+
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Consultation">
+    </form>
+
+    <form action="ReceptionistTableChoice" method="get">
+    <input class="favorite styled"
+       type="submit"
+       name="choice"
+       value="Admission">
+    </form>
+
+
+  </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}
