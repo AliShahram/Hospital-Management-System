@@ -25,7 +25,7 @@ SECRET_KEY = '95p@#66+h2@$wflq%ohd!&0w&hb)xhbasubpj1xplkwg9z&*r='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'hospital_management_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shahram',
-        'USER': 'shahram',
-        'PASSWORD': '',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'abc.123',
         'HOST': 'localhost',
         'PORT': '5432',
     }

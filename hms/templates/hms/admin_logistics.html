@@ -1,0 +1,68 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="alert alert-success">
+        <h5>Admin's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-6 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+      <a class="alert alert-danger"href="{% url 'Admin_Staff' %}">Staff</a>
+      <a class="alert alert-danger"href="{% url 'login' %}">Logistics</a>
+      <a class="alert alert-danger"href="{% url 'Admin_Medicine' %}">Medicine</a>
+    </div>
+  </div>
+  <div class="row">
+    {% if message %}
+      <div class="alert, alert-danger box">
+        <h6>{{message}}</h6>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="box">
+        <h6>Create Room</h6>
+          <form class="form-group" action="Create_Room" method="post">
+          {% csrf_token %}
+          Type: <input class="form-control" type="text" name="1type" value=""><br>
+          Cost: <input class="form-control" type="text" name="2cost" value=""><br>
+          Status: <input class="form-control" type="text" name="3status" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="class="box">
+        <h6>Update Room</h6>
+          <form class="form-group" action="Get_Room_Info" method="post">
+            {% csrf_token %}
+            Room ID: <input class="form-control" type="text" name="1r_id" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+      {% if querySet %}
+      <div class="box">
+        <h6>Delete/Update Room Information</h6>
+        <form class="form-group" action="Update_Room_Info" method="post">
+          {% csrf_token %}
+          <input class="form-control" type="hidden" name="1room_id" value="{{querySet.0}}"><br>
+          Type: <input class="form-control" type="text" name="2type" value="{{querySet.1}}"><br>
+          Cost: <input class="form-control" type="text" name="3cost" value="{{querySet.2}}"><br>
+          Status: <input class="form-control" type="text" name="4status" value="{{querySet.3}}"><br>
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Room</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
