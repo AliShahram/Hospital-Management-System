@@ -18,6 +18,7 @@ class Tools:
             if count != 0 and key != 'button':
                 result.append(value)
             count += 1
+        result = list(map(lambda s: s.strip(), result))
         return result
 
 
@@ -80,12 +81,11 @@ class Database(Tools):
     def register_patient(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = register_patient
+        p_id = param[0]
         try:
-            print(param)
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful"
+            result = "Insertion Successful. Patient ID is " + p_id
         except (Exception, pg2.DatabaseError) as error:
-            print(error)
             result = ("Error while inserting into PostgreSQL table", error)
         return result
 
@@ -95,7 +95,6 @@ class Database(Tools):
         p_id = param[0]
 
         SELECT_STATEMENT = get_patient_info
-
         try:
             result = self.execute_select_param(SELECT_STATEMENT, p_id)
             if result == None:
@@ -137,12 +136,11 @@ class Database(Tools):
     def create_visit(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = create_visit
+        v_id = param[0]
         try:
-            print(param)
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful"
+            result = "Insertion Successful. Visit id is " + v_id
         except (Exception, pg2.DatabaseError) as error:
-            print(error)
             result = ("Error while inserting into PostgreSQL table", error)
         return result
 
@@ -180,7 +178,6 @@ class Database(Tools):
         param = self.process_form(form)
         INSERT_STATEMENT = delete_visit
         v_id = param[0]
-        print(v_id)
         try:
             self.cursor.execute(INSERT_STATEMENT, v_id)
             result = "Delete Successful"
@@ -192,19 +189,19 @@ class Database(Tools):
     def create_admission(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = create_admission
+        ad_id = param[0]
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful"
+            result = "Insertion Successful. Admission ID is " + ad_id
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
 
     def get_admission_info(self, form):
         param = self.process_form(form)
-        ad_id = param[0]
         SELECT_STATEMENT = get_admission_info
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, ad_id)
+            result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
                 message = "No such patient exists"
             else:
@@ -218,7 +215,7 @@ class Database(Tools):
     def update_admission_info(self, form):
         param = self.process_form(form)
         ad_id = param.pop(0)
-        param.pop()
+        param.pop() #debug why?
         param.append(ad_id)
         INSERT_STATEMENT = update_admission_info
         try:
@@ -251,46 +248,83 @@ class Database(Tools):
 
     def get_appointment_info(self, form):
         param = self.process_form(form)
-        d_id = param[0]
-        ap_date = param[1]
-        ap_time=param[2]
-
         SELECT_STATEMENT = get_appointment_info
+        print(param)
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, [d_id, ap_date, ap_time])
+            result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
-                print(result)
                 message = "No such patient exists"
             else:
                 message = "Success: appointment information retrieved"
-                print(message)
-
         except (Exception, pg2.DatabaseError) as error:
             result = None
             message = ('Failure:', error)
-            print(error)
         return result, message
 
     def update_appointment_info(self, form):
         param = self.process_form(form)
-        ad_id = param.pop(0)
         param.pop()
-        param.append(ap_id)
+        print(param)
+        print(type(param))
+        pk = list(param[0]) + param[3:5]
+        param = param + pk #slightly less efficient than a for loop, ask ajit if this is a problem
         INSERT_STATEMENT = update_appointment_info
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while updating  PostgreSQL table", error)
+        print(param)
+        print(result)
         return result
 
     def delete_appointment(self, form):
         param = self.process_form(form)
+        param.pop()
+        pk = param[2:5]
         INSERT_STATEMENT = delete_appointment
-        ap_id = param[0]
         try:
-            self.cursor.execute(INSERT_STATEMENT, ap_id)
+            self.cursor.execute(INSERT_STATEMENT, pk)
             result = "Delete Successful"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while deleting from PostgreSQL table", error)
+        return result
+
+    def create_consultation(self, form):
+        param = self.process_form(form)
+        INSERT_STATEMENT = create_consultation
+        try:
+            self.cursor.execute(INSERT_STATEMENT, param)
+            result = "Insertion Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while inserting into PostgreSQL table", error)
+        return result
+
+    def get_consultation_info(self, form):
+        param = self.process_form(form)
+
+        SELECT_STATEMENT = get_consultation_info
+        try:
+            result = self.execute_select_param(SELECT_STATEMENT, param)
+            if result == None:
+                message = "No such consultation exists"
+            else:
+                message = "Success: consultaiton information retrieved"
+
+        except (Exception, pg2.DatabaseError) as error:
+            result = None
+            message = ('Failure:', error)
+        return result, message
+
+    def update_consultation_info(self, form):
+        param = self.process_form(form)
+        param.pop()
+        pk = [param[0]] + param[2:4]
+        param = param + pk
+        INSERT_STATEMENT = update_consultation_info
+        try:
+            self.cursor.execute(INSERT_STATEMENT, param)
+            result = "Update Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while updating  PostgreSQL table", error)
         return result

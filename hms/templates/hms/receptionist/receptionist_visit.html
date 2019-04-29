@@ -8,7 +8,22 @@
   <h5>Receptionist's Interface</h5>
   <h5>Visit Info</h5>
 </div>
-
+<div class="col-sm-8 button-box">
+  <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+  <a class="alert alert-danger"href="{% url 'Patient' %}">Patient</a>
+  <a class="alert alert-danger"href="{% url 'Visit' %}">Visit</a>
+  <a class="alert alert-danger"href="{% url 'Appointment' %}">Appointment</a>
+  <a class="alert alert-danger"href="{% url 'Consultation' %}">Consultation</a>
+  <a class="alert alert-danger"href="{% url 'Admission' %}">Admission</a>
+</div>
+</div>
+<div class="row">
+{% if message %}
+  <div class="alert, alert-danger box">
+    <h6>{{message}}</h6>
+  </div>
+{% endif %}
+</div>
 
 
 <div class="container">

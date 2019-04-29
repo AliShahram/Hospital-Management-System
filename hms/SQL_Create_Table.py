@@ -137,7 +137,29 @@ CREATE TABLE test(
     name VARCHAR(64),
     cost REAL,
 );
+create_admission =
+BEGIN;
+INSERT INTO Admission (re_id, v_id, ro_id, admit_date, dis_date)
+VALUES (%s, %s, %s, %s, %s);
+COMMIT;
+
+create_appointment =
+BEGIN;
+INSERT INTO Appointment (re_id, v_id, d_id, ap_date, ap_time)
+VALUES (%s, %s, %s, %s, %s);
+COMMIT;
 
 
+create_consultation =
+BEGIN;
+INSERT INTO Consultation (d_id, v_id, cons_date, cons_time)
+VALUES (%s, %s, %s, %s);
+COMMIT;
 
+
+create_visit =
+BEGIN;
+INSERT INTO Visit ( p_id, admit_date, dis_date)
+VALUES (%s, %s, %s);
+COMMIT;
 """

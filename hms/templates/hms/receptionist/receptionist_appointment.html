@@ -8,7 +8,24 @@
   <h5>Receptionist's Interface</h5>
   <h5>Appointment Info</h5>
 </div>
+<div class="row">
 
+  <div class="col-sm-12 button-box">
+    <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+    <a class="alert alert-danger"href="{% url 'Patient' %}">Patient</a>
+    <a class="alert alert-danger"href="{% url 'Visit' %}">Visit</a>
+    <a class="alert alert-danger"href="{% url 'Appointment' %}">Appointment</a>
+    <a class="alert alert-danger"href="{% url 'Consultation' %}">Consultation</a>
+    <a class="alert alert-danger"href="{% url 'Admission' %}">Admission</a>
+  </div>
+</div>
+<div class="row">
+  {% if message %}
+    <div class="alert, alert-danger box">
+      <h6>{{message}}</h6>
+    </div>
+  {% endif %}
+</div>
 
 
 <div class="container">
@@ -44,13 +61,15 @@
         <h6> View/Update/Delete Appointment Information</h6>
         <form class="form-group" action="{% url 'Update_Appointment' %}" method="post">
           {% csrf_token %}
-          <input class="form-control" type="hidden" name="ap_id" value="{{querySet.0}}"><br>
-          Visit ID: <input class="form-control" type="text" name="v_id" value="{{querySet.0}}"><br>
-          Patient ID: <input class="form-control" type="text" name="p_id" value="{{querySet.1}}"><br>
-          Appointment Date: <input class="form-control" type="text" name="ap_date" value="{{querySet.2}}"><br>
-          Appointment Date: <input class="form-control" type="text" name="ap_time" value="{{querySet.3}}"><br>
+          <input class="form-control" type="hidden" name="re_id" value="{{querySet.0}}"><br>
+          Receptionist ID: <input class="form-control" type="text" name="re_id" value="{{querySet.0}}"><br>
+          Visit ID: <input class="form-control" type="text" name="p_id" value="{{querySet.1}}"><br>
+          Doctor ID: <input class="form-control" type="text" name="v_id" value="{{querySet.2}}"><br>
+          Appointment Date: <input class="form-control" type="text" name="ap_date" value="{{querySet.3}}"><br>
+          Appointment Time: <input class="form-control" type="text" name="ap_time" value="{{querySet.4}}"><br>
           <button class="alert alert-danger" type="submit" name="Update">Update</button>
-          <button class="alert alert-danger" type="submit" name="Delete">Delete Patient</button>
+
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Appointment</button>
     </div>
     {% endif %}
   </div>

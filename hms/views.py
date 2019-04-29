@@ -19,7 +19,7 @@ def HomePage(request):
         if employee_type == 'd':
             return render(request, 'hms/doctor.html')
         elif employee_type == 'r':
-            return render(request, 'hms/receptionist/receptionist_table_choice.html')
+            return render(request, 'hms/receptionist/receptionist_patient.html')
         elif employee_type == 'a':
             return render(request, 'hms/admin.html')
     else:
@@ -63,11 +63,13 @@ def Get_Patient_Info(request):
 
 def Update_Patient(request):
     if request.POST:
+        print("post received")
         if 'Update' in request.POST:
             message = db.update_patient_info(request.POST)
 
         elif 'Delete' in request.POST:
             message = db.delete_patient(request.POST)
+            print(message)
 
     context = {'message':message}
     return render(request, 'hms/receptionist/receptionist_patient.html', context)
@@ -114,6 +116,7 @@ def Create_Admission(request):
     return render(request, 'hms/receptionist/receptionist_admission.html', context)
 
 def Update_Admission(request):
+    print("view")
     if request.POST:
         if 'Update' in request.POST:
             message = db.update_admission_info(request.POST)
@@ -149,6 +152,35 @@ def Update_Appointment(request):
 
     context = {'message':message}
     return render(request, 'hms/receptionist/receptionist_appointment.html', context)
+
+
+def Create_Consultation(request):
+    print("view_works")
+    if request.POST:
+        result = db.create_consultation(request.POST)
+        message = result
+    else:
+        message = None
+    context = {'message':message}
+    return render(request, 'hms/receptionist/receptionist_consultation.html', context)
+
+def Update_Consultation_Info(request):
+    print("view works")
+    if request.POST:
+        if 'Update' in request.POST:
+            message = db.update_consultation_info(request.POST)
+
+        elif 'Delete' in request.POST:
+            message = db.delete_consultation(request.POST)
+
+    context = {'message':message}
+    return render(request, 'hms/receptionist/receptionist_consultation.html', context)
+
+def Get_Consultation_Info(request):
+    if request.POST:
+        querySet, message = db.get_consultation_info(request.POST)
+    context = {'querySet':querySet, 'message':message}
+    return render(request, 'hms/receptionist/receptionist_consultation.html', context)
 
 def Visit(request):
     return render(request, 'hms/receptionist/receptionist_visit.html')
