@@ -142,7 +142,6 @@ class Database(Tools):
         param = self.process_form_sorted(form)
         r_id = param[0]
         param.pop(0)  # remove Id from the form
-        param.pop(-1)   # remove the empty string, created as a result of name for the button
         param.append(r_id)
 
         UPDATE_STATEMENT = update_room_info
@@ -224,7 +223,6 @@ class Database(Tools):
         param = self.process_form_sorted(form)
         id = param[0]
         param.pop(0)  # remove Id from the form
-        param.pop(-1)   # remove the empty string, created as a result of name for the button
         param.append(id)
 
         type = param[0]
