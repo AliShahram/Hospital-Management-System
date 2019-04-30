@@ -17,26 +17,39 @@
   <div class="col-sm-4">
     <div class="class="box">
       <h6>Look up a Patient</h6>
-      <form class="form-group" action="Register_Doctor" method="post">
+      <form class="form-group" action="get_medical_history" method="post">
         {% csrf_token %}
-        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
+        Patient ID: <input class="form-control" type="text" name="p_id" value=""><br>
         <button class="alert alert-danger" type="submit" name="button">Look-Up</button>
       </form>
+      </div>
+
+        <div class="box">
+            <h6>Medical History</h6>
+            <li>Operations: {{context_history.p_operation}}</li>
+            <li>Prescriptions: {% for p in p_prescription %} {{p}} {% endfor%} </li>
+            <li>Tests: {% for t in p_test %} {{t}} {% endfor%} </li>
+              <!-- Operations: {% if operation %} {{operation}} {% endif %} <br>
+              Prescriptions: {% if Prescription %} {{Prescription}} {% endif %} <br>
+              Tests: {% if test %} {{test}} {% endif %}<br> -->
+        </div>
     </div>
-  </div>
+
 
   <div class="col-sm-4">
     <div class="box">
       <h6>Add Operation Procedure</h6>
-      <form class="form-group" action="register_opeartion" method="post">
+      <form class="form-group" action="register_operation" method="post">
         {% csrf_token %}
-        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
-        Date of Procedure : <input type="date" name="OperationDate"><br><br>
+        Patient ID: <input class="form-control" type="text" name="p_id" value=""><br>
+        Date of Procedure : (yyyy-mm-dd) <input type="text" name="PrescriptionDate"><br><br>
         Select operation:
-        <select class="" name="">
-          <option>Operation 1</option>
-          <option> Operation 2</option>
-        </select><br><br>
+        <select class="form-control" name="operation_type">
+          {% for med in operation%}
+            <option value="{{med}}" >{{med}}</option>
+          {% endfor %}
+        </select>
+        <br><br>
         <button class="alert alert-danger" type="submit" name="button">Add</button>
       </form>
     </div>
@@ -48,11 +61,12 @@
       <form class="form-group" action="register_prescription" method="post">
         {% csrf_token %}
         Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
-        Date of Procedure : <input type="date" name="PrescriptionDate"><br><br>
+        Date of Procedure : (yyyy-mm-dd) <input type="text" name="PrescriptionDate"><br><br>
         Select Medicine:
-        <select class="" name="">
-          <option>Meds 1</option>
-          <option> Meds 2</option>
+        <select class="form-control" name="operation_type">
+          {% for med in medicine%}
+            <option>{{med}}</option>
+          {% endfor %}
         </select><br><br>
         <button class="alert alert-danger" type="submit" name="button">Add</button>
       </form>
@@ -60,16 +74,25 @@
   </div>
 
   <div class="col-sm-4">
+    <div class="">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="">
+    </div>
+  </div>
+  <div class="col-sm-4">
     <div class="box">
       <h6>Add Tests</h6>
-      <form class="form-group" action="register_test" method="post">
+      <form class="form-group" action="register_testing" method="post">
         {% csrf_token %}
         Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
-        Date of Procedure : <input type="date" name="PrescriptionDate"><br><br>
+        Date of Procedure : <input type="text" name="PrescriptionDate"><br><br>
         Select a Test:
-        <select class="" name="">
-          <option>Test 1</option>
-          <option> Tests 2</option>
+        <select class="form-control" name="operation_type">
+          {% for med in testing%}
+            <option>{{med}}</option>
+          {% endfor %}
         </select><br><br>
         <button class="alert alert-danger" type="submit" name="button">Add</button>
       </form>

@@ -49,41 +49,73 @@ CREATE_EMP_DOC_ADMIN_RECEP = """
         FOREIGN KEY (a_id) REFERENCES employee(e_id)
     );
 
-    COMMIT;
 """
 
+create_table_procedure = """
+BEGIN;
+    create table patient(
+    p_id serial primary key,
+    name varchar(200),
+    DOB date,
+    address varchar(200),
+    email VARCHAR(100),
+    contact varchar(200)
+    );
 
-create_table_room = """
+    create table visit(
+    v_id serial primary key,
+    p_id int REFERENCES patient(p_id),
+    admit_date date,
+    discharge_date date NULL
+    );
+
     CREATE TABLE room(
-    r_id SERIAL,
+    r_id SERIAL primary key,
     type VARCHAR(64),
-    cost REAL,
-)"""
+    cost REAL
+);
 
-
-"""
 CREATE TABLE medicine(
-    m_id SERIAL,
+    m_id SERIAL primary key,
     name VARCHAR(64),
-    cost REAL,
-    r_id SERIAL,
-    FOREIGN KEY (r_id) REFERENCES room(r_id)
+    cost REAL
 );
 
 
 CREATE TABLE operation(
-    o_id SERIAL,
+    o_id SERIAL primary key,
     name VARCHAR(64),
-    cost REAL,
+    cost REAL
 );
 
 
 CREATE TABLE test(
-    t_id SERIAL,
+    t_id SERIAL primary key,
     name VARCHAR(64),
-    cost REAL,
+    cost REAL
 );
 
+create table operate(
+    d_id int REFERENCES doctor(d_id),
+    o_id int REFERENCES operation(o_id),
+    v_id int REFERENCES visit(v_id),
+    datetime date
+);
 
+create table prescribe(
+    d_id int REFERENCES doctor(d_id),
+    m_id int REFERENCES medicine(m_id),
+    v_id int REFERENCES visit(v_id),
+    datetime date
+);
+
+create table testing(
+    d_id int REFERENCES doctor(d_id),
+    t_id int REFERENCES test(t_id),
+    v_id int REFERENCES visit(v_id),
+    datetime date
+);
+
+COMMIT;
 
 """

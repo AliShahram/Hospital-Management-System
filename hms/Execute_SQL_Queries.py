@@ -26,6 +26,7 @@ class Database(Tools):
         sql queries """
 
     def __init__(self):
+        self.current_user = None
         self.cursor = connection.cursor()
         Tools.__init__(self)
 
@@ -47,6 +48,15 @@ class Database(Tools):
         return
 
 
+    def fill_option_select(self, statement):
+        result = []
+        self.cursor.execute(statement)
+        rows = self.cursor.fetchall()
+        for i in rows:
+            result.append(i[0])
+        return result
+
+
 
 #-------------------------------------------------------
 #Queries Execution
@@ -54,6 +64,7 @@ class Database(Tools):
 
     def ident_employee_type(self, e_id):
         SELECT_STATEMENT = ident_employee_type
+        self.current_user = e_id
         try:
             result = self.execute(SELECT_STATEMENT, e_id)
         except (Exception, pg2.DatabaseError) as error:
@@ -113,10 +124,9 @@ class Database(Tools):
     def register_opeartion(self, form):
 
         param = self.process_form(form)
-
-        visit = self.get_visit_id(form[0])
-        operation = self.get_oper_id(form[2])
-        doctor = "I dont know"
+        visit = self.get_visit_id(param[0])
+        operation = self.get_oper_id(param[2])
+        doctor = self.current_user
         param[0] = doctor
         param[2] = operation
         param.insert(3, visit)
@@ -127,6 +137,7 @@ class Database(Tools):
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Insertion Successful"
         except (Exception, pg2.DatabaseError) as error:
+            print(error)
             result = ("Error while inserting into PostgreSQL table", error)
         return result
 
@@ -134,13 +145,12 @@ class Database(Tools):
 
         param = self.process_form(form)
 
-        visit = self.get_visit_id(form[0])
-        medicine = self.get_med_id(form[2])
-        doctor = "I dont know"
+        visit = self.get_visit_id(param[0])
+        medicine = self.get_med_id(param[2])
+        doctor = self.current_user
         param[0] = doctor
         param[2] = medicine
         param.insert(3, visit)
-
         INSERT_STATEMENT = insert_prescription_procedure
 
         try:
@@ -154,12 +164,13 @@ class Database(Tools):
 
         param = self.process_form(form)
 
-        visit = self.get_visit_id(form[0])
-        test = self.get_test_id(form[2])
-        doctor = "I dont know"
+        visit = self.get_visit_id(param[0])
+        test = self.get_test_id(param[2])
+        doctor = self.current_user
         param[0] = doctor
         param[2] = test
         param.insert(3, visit)
+
 
         INSERT_STATEMENT = insert_testing_procedure
 
@@ -169,3 +180,53 @@ class Database(Tools):
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
+
+    def get_operation_name(self):
+        statement = get_operation_name
+        try:
+            result = self.fill_option_select(statement)
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error: ", error)
+        return result
+
+    def get_medicine_name(self):
+        result = []
+        statement = get_medicine_name
+        try:
+            result = self.fill_option_select(statement)
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error: ", error)
+        return result
+
+    def get_test_name(self):
+        statement = get_test_name
+        try:
+            result = self.fill_option_select(statement)
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error: ", error)
+        return result
+
+    def get_medical_history(self, form):
+        param = self.process_form(form)
+        p_id = param[0]
+        
+        try:
+            operation = self.execute(get_operation_history, p_id)
+            message = "Success: employee information retrieved"
+        except (Exception, pg2.DatabaseError) as error:
+            operation = None
+            message = ('Failure:', error)
+        try:
+            Prescription = self.execute(get_prescription_history, p_id)
+            message = "Success: employee information retrieved"
+        except (Exception, pg2.DatabaseError) as error:
+            Prescription = None
+            message = ('Failure:', error)
+        try:
+            test = self.execute(get_test_history, p_id)
+            message = "Success: employee information retrieved"
+        except (Exception, pg2.DatabaseError) as error:
+            test = None
+            message = ('Failure:', error)
+
+        return operation, Prescription, test, message
