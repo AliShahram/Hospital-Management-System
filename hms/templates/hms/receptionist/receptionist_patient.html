@@ -1,0 +1,82 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+<html>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+      <div class="alert alert-success">
+        <h5>Receptioinst's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-8 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+      <a class="alert alert-danger"href="{% url 'Patient' %}">Patient</a>
+      <a class="alert alert-danger"href="{% url 'Visit' %}">Visit</a>
+      <a class="alert alert-danger"href="{% url 'Appointment' %}">Appointment</a>
+      <a class="alert alert-danger"href="{% url 'Consultation' %}">Consultation</a>
+      <a class="alert alert-danger"href="{% url 'Admission' %}">Admission</a>
+    </div>
+  </div>
+  <div class="row">
+    {% if message %}
+      <div class="alert, alert-danger box">
+        <h6>{{message}}</h6>
+      </div>
+    {% endif %}
+  </div>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h6>Register Patient</h6>
+      <div class="row">
+          <div class="box">
+            <form class="form-group" action="{% url 'RegisterPatient' %}" method="post">{% csrf_token %}
+              First Name: <input class="form-control" type="text" name="f_name" value=""><br>
+              Last Name: <input class="form-control" type="text" name="l_name" value=""><br>
+              Date of Birth: <input class="form-control" type="text" name="p_dob" value="yyyy-mm-dd"><br>
+              Email: <input class="form-control" type="text" name="p_email" value=""><br>
+              Address: <input class="form-control" type="text" name="<p_address</p>" value=""><br>
+              Phone: <input class="form-control" type="text" name="p_contact" value=""><br>
+              <button class="alert alert-danger" type="submit" name="button">Submit</button>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h6> View/Update/Delete Patient Information</h6>
+        <form class="form-group" action="{% url 'Get_Patient_Info' %}" method="post">
+          {% csrf_token %}
+          Patient ID: <input class="form-control" type="text" name="p_id" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+      {% if querySet %}
+      <div class="box">
+        <h6> View/Update/Delete Patient Information</h6>
+        <form class="form-group" action="{% url 'UpdatePatient' %}" method="post">
+          {% csrf_token %}
+          <input class="form-control" type="hidden" name="p_id" value="{{querySet.0}}"><br>
+          Patient ID: <input class="form-control" type="text" name="p_id" value="{{querySet.0}}"><br>
+          First Name: <input class="form-control" type="text" name="f_name" value="{{querySet.1}}"><br>
+          Last Name: <input class="form-control" type="text" name="l_name" value="{{querySet.2}}"><br>
+          DOB: <input class="form-control" type="text" name="dob: yyyy-mm-dd" value="{{querySet.3}}"><br>
+          Address: <input class="form-control" type="text" name="address" value="{{querySet.4}}"><br>
+          Email: <input class="form-control" type="text" name="email" value="{{querySet.5}}"><br>
+          Phone: <input class="form-control" type="text" name="phone" value="{{querySet.6}}"><br>
+
+
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Patient</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
