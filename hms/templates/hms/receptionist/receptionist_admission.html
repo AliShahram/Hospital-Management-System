@@ -30,7 +30,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm">
-      <h6>Create admission</h6>
+      <h6>Create Admission</h6>
       <div class="row">
           <div class="box">
             <form class="form-group" action="{% url 'Create_Admission' %}" method="post">{% csrf_token %}
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="col-sm">
-      <h6> View/Update/Delete Visit Information</h6>
+      <h6> View/Update/Delete Admission Information</h6>
         <form class="form-group" action="{% url 'Get_Admission_Info' %}" method="post">
           {% csrf_token %}
           Admission ID <input class="form-control" type="text" name="ad_id" value=""><br>
@@ -54,17 +54,18 @@
       </div>
       {% if querySet %}
       <div class="box">
-        <h6> View/Update/Delete Visit Information</h6>
+        <h6> View/Update/Delete Admission Information</h6>
         <form class="form-group" action="{% url 'Update_Admission' %}" method="post">
           {% csrf_token %}
-          <input class="form-control" type="hidden" name="v_id" value="{{querySet.0}}"><br>
-          Admission ID: <input class="form-control" type="text" name="v_id" value="{{querySet.0}}"><br>
-          Visit ID: <input class="form-control" type="text" name="p_id" value="{{querySet.1}}"><br>
-          Room Num <input class="form-control" type="text" name="admit_date" value="{{querySet.2}}"><br>
-          Admission Date: <input class="form-control" type="text" name="admit_date" value="{{querySet.3}}"><br>
-          Discharge Date: <input class="form-control" type="text" name="dis_date" value="{{querySet.4}}"><br>
+          <input class="form-control" type="hidden" name="ad_id" value="{{querySet.0}}"><br>
+          Admission ID: <input class="form-control" type="text" name="ad_id" value="{{querySet.0}}"><br>
+          Receptionist ID: <input class="form-control" type="text" name="re_id" value="{{querySet.1}}"><br>
+          Visit ID: <input class="form-control" type="text" name="v_id" value="{{querySet.2}}"><br>
+          Room Num <input class="form-control" type="text" name="ro_id" value="{{querySet.3}}"><br>
+          Admission Date: <input class="form-control" type="text" name="admit_date" value="{{querySet.4}}"><br>
+          Discharge Date: <input class="form-control" type="text" name="dis_date" value="{{querySet.5}}"><br>
           <button class="alert alert-danger" type="submit" name="Update">Update</button>
-          <button class="alert alert-danger" type="submit" name="Delete">Delete Admission</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete</button>
     </div>
     {% endif %}
   </div>

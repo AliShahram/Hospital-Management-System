@@ -116,14 +116,13 @@ def Create_Admission(request):
     return render(request, 'hms/receptionist/receptionist_admission.html', context)
 
 def Update_Admission(request):
-    print("view")
     if request.POST:
         if 'Update' in request.POST:
             message = db.update_admission_info(request.POST)
 
         elif 'Delete' in request.POST:
+            print('delete view admission works')
             message = db.delete_admission(request.POST)
-
     context = {'message':message}
     return render(request, 'hms/receptionist/receptionist_admission.html', context)
 

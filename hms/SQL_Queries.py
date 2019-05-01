@@ -52,38 +52,51 @@ WHERE p_id = %s;
 COMMIT;
 """
 
+get_max_p_id="""
+SELECT MAX(p_id) FROM Patient;
+"""
+
+
+create_visit = """
+BEGIN;
+INSERT INTO Visit ( p_id, admit_date, dis_date)
+VALUES (%s, %s, %s);
+COMMIT;
+"""
 
 get_visit_info = """
 SELECT *
 FROM Visit
-WHERE v_id = %s;
+WHERE v_id = (%s);
 """
 
 update_visit_info = """
 BEGIN;
 UPDATE  Visit SET
 (p_id, admit_date, dis_date)
-= ( %s, %s, %s)
-WHERE v_id = %s;
+= (%s, %s, %s)
+WHERE v_id = (%s);
 COMMIT;
 """
 
 delete_visit = """
 BEGIN;
-DELETE FROM Visit WHERE v_id = %s;
+DELETE FROM Visit WHERE v_id = (%s);
 COMMIT;
 """
-
+get_max_v_id = """
+SELECT MAX(v_id) FROM Visit;
+"""
 
 get_admission_info = """
 SELECT *
 FROM Admission
-WHERE (ad_id) = (%s);
+WHERE ad_id = (%s);
 """
 
 update_admission_info = """
 BEGIN;
-UPDATE  Visit SET
+UPDATE  Admission SET
 (re_id, v_id, ro_id, admit_date, dis_date)
 = (%s, %s, %s, %s, %s)
 WHERE ad_id =(%s);
@@ -96,7 +109,15 @@ DELETE FROM Admission WHERE ad_id = (%s);
 COMMIT;
 """
 
-
+create_admission ="""
+BEGIN;
+INSERT INTO Admission (re_id, v_id, ro_id, admit_date, dis_date)
+VALUES (%s, %s, %s, %s, %s);
+COMMIT;
+"""
+get_max_ad_id = """
+SELECT MAX(ad_id) FROM Admission;
+"""
 
 get_appointment_info = """
 SELECT *
@@ -131,5 +152,26 @@ BEGIN;
 UPDATE Consultation SET (d_id, v_id, cons_date, cons_time)
 = (%s, %s, %s, %s)
 WHERE (d_id, cons_date, cons_time) = (%s, %s, %s);
+COMMIT;
+"""
+
+
+create_appointment = """
+BEGIN;
+INSERT INTO Appointment (re_id, v_id, d_id, ap_date, ap_time)
+VALUES (%s, %s, %s, %s, %s);
+COMMIT;
+"""
+
+create_consultation = """
+BEGIN;
+INSERT INTO Consultation (d_id, v_id, cons_date, cons_time)
+VALUES (%s, %s, %s, %s);
+COMMIT;
+"""
+
+delete_consultation = """
+BEGIN;
+DELETE FROM Consultation WHERE (d_id, cons_date, cons_time)= (%s, %s, %s);
 COMMIT;
 """

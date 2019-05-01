@@ -44,7 +44,6 @@ class Database(Tools):
             param = [param]
         else:
             param = list(param)
-
         self.cursor.execute(statement, param)
         row = self.cursor.fetchone()
         return row
@@ -81,9 +80,10 @@ class Database(Tools):
     def register_patient(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = register_patient
-        p_id = param[0]
+        SERIAL_GET_STATEMENT = get_max_p_id
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
+            p_id = str(self.execute_select_param(SERIAL_GET_STATEMENT,param)[0])
             result = "Insertion Successful. Patient ID is " + p_id
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
@@ -136,10 +136,11 @@ class Database(Tools):
     def create_visit(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = create_visit
-        v_id = param[0]
+        SERIAL_GET_STATEMENT = get_max_v_id
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful. Visit id is " + v_id
+            v_id = str(self.execute_select_param(SERIAL_GET_STATEMENT,param)[0])
+            result = "Visit created. Visit id is " + v_id
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
@@ -151,7 +152,7 @@ class Database(Tools):
         try:
             result = self.execute_select_param(SELECT_STATEMENT, v_id)
             if result == None:
-                message = "No such patient exists"
+                message = "No such visit exists"
             else:
                 message = "Success: patient information retrieved"
 
@@ -171,7 +172,6 @@ class Database(Tools):
             result = "Update Successful"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while updating  PostgreSQL table", error)
-            print(error)
         return result
 
     def delete_visit(self, form):
@@ -189,10 +189,12 @@ class Database(Tools):
     def create_admission(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = create_admission
-        ad_id = param[0]
+        SERIAL_GET_STATEMENT = get_max_ad_id
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful. Admission ID is " + ad_id
+            #gets the highest serial in the table, which is the most recently inserted
+            ad_id = str(self.execute_select_param(SERIAL_GET_STATEMENT,param)[0])
+            result = "Admission registered. Admission ID is " + ad_id
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
@@ -200,12 +202,14 @@ class Database(Tools):
     def get_admission_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_admission_info
+        ad_id = param[0]
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_param(SELECT_STATEMENT, ad_id)
+
             if result == None:
-                message = "No such patient exists"
+                message = "No such admission exists"
             else:
-                message = "Success: patient information retrieved"
+                message = "Success: admission information retrieved"
 
         except (Exception, pg2.DatabaseError) as error:
             result = None
@@ -215,7 +219,7 @@ class Database(Tools):
     def update_admission_info(self, form):
         param = self.process_form(form)
         ad_id = param.pop(0)
-        param.pop() #debug why?
+        param.pop()
         param.append(ad_id)
         INSERT_STATEMENT = update_admission_info
         try:
@@ -223,6 +227,8 @@ class Database(Tools):
             result = "Update Successful"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while updating  PostgreSQL table", error)
+        print(param)
+        print(len(param))
         return result
 
     def delete_admission(self, form):
@@ -241,7 +247,7 @@ class Database(Tools):
         INSERT_STATEMENT = create_appointment
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful"
+            result = "Appointment created."
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
@@ -249,11 +255,10 @@ class Database(Tools):
     def get_appointment_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_appointment_info
-        print(param)
         try:
             result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
-                message = "No such patient exists"
+                message = "No such appointment exists"
             else:
                 message = "Success: appointment information retrieved"
         except (Exception, pg2.DatabaseError) as error:
@@ -264,8 +269,6 @@ class Database(Tools):
     def update_appointment_info(self, form):
         param = self.process_form(form)
         param.pop()
-        print(param)
-        print(type(param))
         pk = list(param[0]) + param[3:5]
         param = param + pk #slightly less efficient than a for loop, ask ajit if this is a problem
         INSERT_STATEMENT = update_appointment_info
@@ -274,8 +277,6 @@ class Database(Tools):
             result = "Update Successful"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while updating  PostgreSQL table", error)
-        print(param)
-        print(result)
         return result
 
     def delete_appointment(self, form):
@@ -295,7 +296,7 @@ class Database(Tools):
         INSERT_STATEMENT = create_consultation
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
-            result = "Insertion Successful"
+            result = "Consultation successfuly registered"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
@@ -316,12 +317,25 @@ class Database(Tools):
             message = ('Failure:', error)
         return result, message
 
+    def delete_consultation(self, form):
+        param = self.process_form(form)
+        INSERT_STATEMENT = delete_consultation
+        pk = [param[0]] + param[2:4]
+        try:
+            self.cursor.execute(INSERT_STATEMENT, pk)
+            result = "Delete Successful"
+        except (Exception, pg2.DatabaseError) as error:
+            result = ("Error while deleting from PostgreSQL table", error)
+        return result
+
     def update_consultation_info(self, form):
         param = self.process_form(form)
         param.pop()
         pk = [param[0]] + param[2:4]
         param = param + pk
         INSERT_STATEMENT = update_consultation_info
+        print(param)
+        print(type(param))
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
