@@ -46,8 +46,8 @@ class Database(Tools):
         Tools.__init__(self)
 
 
-    def execute(self, statement):
-        self.cursor.execute(statement)
+    def execute(self, statement, param):
+        self.cursor.execute(statement, [param])
         row = self.cursor.fetchone()
         result = row[0]
         return result

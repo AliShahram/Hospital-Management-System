@@ -23,7 +23,6 @@ def Admin_Logistics(request):
 def HomePage(request):
     e_id = request.GET.get('e_id')
     employee_type = db.ident_employee_type(e_id)
-    employee_type="r"
     if employee_type:
         if employee_type == 'd':
             return render(request, 'hms/doctor.html')
