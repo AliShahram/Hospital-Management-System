@@ -10,7 +10,6 @@ class Tools:
     def __init__(self):
         pass
 
-
     def process_form_sorted(self, form):
         result = []
         keys = []
@@ -53,7 +52,7 @@ class Database(Tools):
         return result
 
     def execute_select_param(self, statement, param):
-        self.cursor.execute(statement, [param])
+        self.cursor.execute(statement, param)
         row = self.cursor.fetchone()
         return row
 
@@ -64,10 +63,6 @@ class Database(Tools):
 
 
     def execute_select_param(self, statement, param):
-        if len(param)==1:
-            param = [param]
-        else:
-            param = list(param)
         self.cursor.execute(statement, param)
         row = self.cursor.fetchone()
         return row
@@ -165,11 +160,11 @@ class Database(Tools):
 
     def get_patient_info(self, form):
         param = self.process_form(form)
-        p_id = param[0]
-
+        print(param)
+        print(type(param))
         SELECT_STATEMENT = get_patient_info
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, p_id)
+            result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
                 message = "No such patient exists"
             else:
@@ -235,10 +230,9 @@ class Database(Tools):
 
     def get_visit_info(self, form):
         param = self.process_form(form)
-        v_id = param[0]
         SELECT_STATEMENT = get_visit_info
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, v_id)
+            result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
                 message = "No such visit exists"
             else:
@@ -339,9 +333,8 @@ class Database(Tools):
     def get_admission_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_admission_info
-        ad_id = param[0]
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, ad_id)
+            result = self.execute_select_param(SELECT_STATEMENT, param)
 
             if result == None:
                 message = "No such admission exists"
