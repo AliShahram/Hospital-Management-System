@@ -88,3 +88,45 @@ create_aleks_work = """
 
     COMMIT;
 """
+
+
+
+create_table_procedure = """
+BEGIN;
+    create table patient(
+    p_id serial primary key,
+    name varchar(200),
+    DOB date,
+    address varchar(200),
+    email VARCHAR(100),
+    contact varchar(200)
+    );
+
+create table visit(
+    v_id serial primary key,
+    p_id int REFERENCES patient(p_id),
+    admit_date date,
+    discharge_date date NULL
+    );
+
+
+create table operate(
+    d_id int REFERENCES doctor(d_id),
+    o_id int REFERENCES operation(o_id),
+    v_id int REFERENCES visit(v_id),
+    datetime date
+);
+create table prescribe(
+    d_id int REFERENCES doctor(d_id),
+    m_id int REFERENCES medicine(m_id),
+    v_id int REFERENCES visit(v_id),
+    datetime date
+);
+create table testing(
+    d_id int REFERENCES doctor(d_id),
+    t_id int REFERENCES test(t_id),
+    v_id int REFERENCES visit(v_id),
+    datetime date
+);
+COMMIT;
+"""

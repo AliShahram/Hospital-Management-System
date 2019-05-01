@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^Admin_Medicine$', views.Admin_Medicine, name='Admin_Medicine'),
     url(r'^Admin_Logistics$', views.Admin_Logistics, name='Admin_Logistics'),
     url(r'^Register_Doctor$', views.Register_Doctor, name='Register_Doctor'),
-
     url(r'^Register_Recep$', views.Register_Recep, name='Register_Recep'),
     url(r'^Get_Employee_Info$', views.Get_Employee_Info, name='Get_Employee_Info'),
     url(r'^Update_Employee_Info$', views.Update_Employee_Info, name='Update_Employee_Info'),
@@ -24,4 +23,9 @@ urlpatterns = [
     url(r'^Get_Medical_Info$', views.Get_Medical_Info, name='Get_Medical_Info'),
     url(r'^Update_Medical_Info$', views.Update_Medical_Info, name='Update_Medical_Info'),
 
+    url(r'^register_operation$', views.register_operation, name='register_operation'),
+    url(r'^register_testing$', views.register_testing, name='register_testing'),
+    url(r'^DoctorHomePage$', views.DoctorHomePage, name='DoctorHomePage'),
+    url(r'^register_prescription$', views.register_prescription, name='register_prescription'),
+    url(r'^get_medical_history$', views.get_medical_history, name='get_medical_history'),
 ]

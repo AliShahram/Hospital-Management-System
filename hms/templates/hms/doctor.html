@@ -2,18 +2,112 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-  <div class="alert alert-success">
-    <h5>Doctor's Interface</h5>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="alert alert-success">
+        <a href="{{ '/DoctorHomePage' }}"> Doctor's Interface</a>
+      </div>
+      {% if message %}
+        <div class="alert, alert-danger box">
+          <h6>{{message}}</h6>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-sm-5 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+    </div>
+
+
+
+
+
+  <div class="col-sm-4">
+    <div class="class="box">
+      <h6>Look up a Patient</h6>
+      <form class="form-group" action="get_medical_history" method="post">
+        {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="p_id" value=""><br>
+        <button class="alert alert-danger" type="submit" name="button">Look-Up</button>
+      </form>
+      </div>
+        <div class="box">
+            <h6>Medical History</h6>
+            <p>Operations: </p>
+            {% for p in p_operation %}
+            <li>{{p}} </li>
+            {% endfor%}
+            <br>
+            <p>Prescriptions:</p>
+            {% for p in p_prescription %}
+            <li> {{p}}</li>
+            {% endfor%}
+            <br>
+            Tests:
+            {% for t in p_test %}
+            <li> {{t}}</li> 
+            {% endfor%}
+
+        </div>
+    </div>
+  <div class="col-sm-4">
+    <div class="box">
+      <h6>Add Operation Procedure</h6>
+      <form class="form-group" action="register_operation" method="post">
+        {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="p_id" value=""><br>
+        Date of Procedure : (yyyy-mm-dd) <input type="text" name="PrescriptionDate"><br><br>
+        Select operation:
+        <select class="form-control" name="operation_type">
+          {% for med in operation%}
+            <option value="{{med}}" >{{med}}</option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <button class="alert alert-danger" type="submit" name="button">Add</button>
+      </form>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-2 title">
-    <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+  <div class="col-sm-4">
+    <div class="box">
+      <h6>Add Prescription</h6>
+      <form class="form-group" action="register_prescription" method="post">
+        {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
+        Date of Procedure : (yyyy-mm-dd) <input type="text" name="PrescriptionDate"><br><br>
+        Select Medicine:
+        <select class="form-control" name="operation_type">
+          {% for med in medicine%}
+            <option>{{med}}</option>
+          {% endfor %}
+        </select><br><br>
+        <button class="alert alert-danger" type="submit" name="button">Add</button>
+      </form>
+    </div>
   </div>
-</div>
-
-
-
-
+  <div class="col-sm-4">
+    <div class="">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="box">
+      <h6>Add Tests</h6>
+      <form class="form-group" action="register_testing" method="post">
+        {% csrf_token %}
+        Patient ID: <input class="form-control" type="text" name="e_id" value=""><br>
+        Date of Procedure : <input type="text" name="PrescriptionDate"><br><br>
+        Select a Test:
+        <select class="form-control" name="operation_type">
+          {% for med in testing%}
+            <option>{{med}}</option>
+          {% endfor %}
+        </select><br><br>
+        <button class="alert alert-danger" type="submit" name="button">Add</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}
