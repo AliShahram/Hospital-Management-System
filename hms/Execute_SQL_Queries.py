@@ -160,9 +160,9 @@ class Database(Tools):
 
     def get_patient_info(self, form):
         param = self.process_form(form)
+        SELECT_STATEMENT = get_patient_info
         print(param)
         print(type(param))
-        SELECT_STATEMENT = get_patient_info
         try:
             result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
@@ -182,7 +182,6 @@ class Database(Tools):
         param.pop()
         param.append(p_id)
         INSERT_STATEMENT = update_patient_info
-
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
@@ -193,7 +192,7 @@ class Database(Tools):
     def delete_patient(self,form):
         param = self.process_form(form)
         INSERT_STATEMENT = delete_patient
-        p_id = param[0]
+        p_id = [param[0]]
         try:
             self.cursor.execute(INSERT_STATEMENT, p_id)
             result = "Delete Successful"
@@ -231,6 +230,7 @@ class Database(Tools):
     def get_visit_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_visit_info
+        print(param)
         try:
             result = self.execute_select_param(SELECT_STATEMENT, param)
             if result == None:
@@ -308,7 +308,7 @@ class Database(Tools):
     def delete_visit(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = delete_visit
-        v_id = param[0]
+        v_id = [param[0]]
         try:
             self.cursor.execute(INSERT_STATEMENT, v_id)
             result = "Delete Successful"

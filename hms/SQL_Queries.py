@@ -128,7 +128,7 @@ SELECT * FROM patient
 
 delete_patient = """
 BEGIN;
-DELETE FROM Patient WHERE p_id = %s;
+DELETE FROM Patient WHERE p_id = (%s);
 COMMIT;
 """
 
