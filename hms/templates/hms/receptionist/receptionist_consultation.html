@@ -1,0 +1,76 @@
+{% extends 'hms/base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+<html>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+      <div class="alert alert-success">
+        <h5>Receptioinst's Interface</h5>
+      </div>
+    </div>
+    <div class="col-sm-8 button-box">
+      <a class="alert alert-danger"href="{% url 'login' %}">Log Out</a>
+      <a class="alert alert-danger"href="{% url 'Patient' %}">Patient</a>
+      <a class="alert alert-danger"href="{% url 'Visit' %}">Visit</a>
+      <a class="alert alert-danger"href="{% url 'Appointment' %}">Appointment</a>
+      <a class="alert alert-danger"href="{% url 'Consultation' %}">Consultation</a>
+      <a class="alert alert-danger"href="{% url 'Admission' %}">Admission</a>
+    </div>
+  </div>
+  <div class="row">
+    {% if message %}
+      <div class="alert, alert-danger box">
+        <h6>{{message}}</h6>
+      </div>
+    {% endif %}
+  </div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h6>Create Consultation</h6>
+      <div class="row">
+          <div class="box">
+            <form class="form-group" action="{% url 'Create_Consultation' %}" method="post">{% csrf_token %}
+              Doctor ID: <input class="form-control" type="text" name="d_id" value=""><br>
+              Visit ID: <input class="form-control" type="text" name="v_id" value=""><br>
+              Date: <input class="form-control" type="text" name="cons_date" value="yyyy-mm-dd"><br>
+              Time: <input class="form-control" type="text" name="cons_time" value="hh:mm:ss"><br>
+              <button class="alert alert-danger" type="submit" name="button">Submit</button>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h6> View/Update/Delete Consultation Information</h6>
+        <form class="form-group" action="{% url 'Get_Consultation_Info' %}" method="post">
+          {% csrf_token %}
+          Doctor ID: <input class="form-control" type="text" name="d_id" value=""><br>
+          Date: <input class="form-control" type="text" name="cons_date" value="yyyy-mm-dd"><br>
+          Time: <input class="form-control" type="text" name="cons_time" value=""><br>
+          <button class="alert alert-danger" type="submit" name="button">Submit</button>
+        </form>
+      </div>
+      {% if querySet %}
+      <div class="box">
+        <h6> View/Update/Delete Consultation Information</h6>
+        <form class="form-group" action="{% url 'Update_Consultation_Info' %}" method="post">
+          {% csrf_token %}
+          <input class="form-control" type="hidden" name="d_id" value="{{querySet.0}}"><br>
+          Doctor ID: <input class="form-control" type="text" name="d_id" value="{{querySet.0}}"><br>
+          Visit ID: <input class="form-control" type="text" name="v_id" value="{{querySet.1}}"><br>
+          Date: <input class="form-control" type="text" name="cons_date" value="{{querySet.2}}"><br>
+          Time: <input class="form-control" type="text" name="cons_time" value="{{querySet.3}}"><br>
+
+          <button class="alert alert-danger" type="submit" name="Update">Update</button>
+          <button class="alert alert-danger" type="submit" name="Delete">Delete Consultation</button>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
