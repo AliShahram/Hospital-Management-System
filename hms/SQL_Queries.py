@@ -226,9 +226,11 @@ get_visit_id = """
 get_operation_name = """
         select name
         from operation;"""
+
 get_medicine_name = """
         select name
         from medicine;"""
+
 get_test_name = """
         select name
         from test;"""
@@ -255,6 +257,7 @@ get_prescription_history = """
 	    from visit
 		where p_id = %s));
 """
+
 get_test_history = """
         select name
         from test

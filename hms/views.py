@@ -183,7 +183,6 @@ def Update_Medical_Info(request):
             message = db.delete_room(request.POST)
 
     context = {'message':message}
-<<<<<<< HEAD
     return render(request, 'hms/admin_logistics.html', context)
 
 
@@ -276,6 +275,3 @@ def get_medical_history(request):
     context = {'p_operation':p_operation, 'p_prescription': p_prescription, 'p_test': p_test, 'message':message}
     #return redirect('/DoctorHomePage', context_history)
     return render(request, 'hms/doctor.html', context)
-=======
-    return render(request, 'hms/admin_medicine.html', context)
->>>>>>> 33b740d31b8332845120a12e8a15bd0ba13e530a
