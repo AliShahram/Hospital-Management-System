@@ -22,8 +22,8 @@ def Admin_Logistics(request):
 
 def HomePage(request):
     e_id = request.GET.get('e_id')
-    status = db.validate_employee(e_id)
-    if status is True:
+    try:
+        status = db.validate_employee(e_id)
         employee_type = db.ident_employee_type(e_id)
         if employee_type:
             if employee_type == 'd':
@@ -32,7 +32,7 @@ def HomePage(request):
                 return render(request, 'hms/receptionist/receptionist_patient.html')
             elif employee_type == 'a':
                 return render(request, 'hms/admin_staff.html')
-    else:
+    except TypeError:
         message = 'Employee not registered or inactive'
         context = {'message':message}
         return render(request, 'hms/login.html', context )
