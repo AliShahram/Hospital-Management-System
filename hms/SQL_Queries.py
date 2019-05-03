@@ -17,7 +17,6 @@ register_new_employee = """
     VALUES (%s, '1')
     """
 
-
 get_recent_emp_id = """
     SELECT max(e_id)
     FROM employee;
@@ -101,13 +100,11 @@ create_room = """
 """
 
 insert_operation = """
-
         INSERT INTO operation (name, cost, room_id)
         VALUES (%s, %s, %s);
 """
 
 insert_medicine = """
-
         INSERT INTO medicine (name, cost)
         VALUES (%s, %s);
 """
@@ -278,6 +275,7 @@ VALUES (%s, %s, %s, %s, %s, %s);
 COMMIT;
 """
 
+
 get_patient_info = """
 SELECT * FROM patient
     WHERE p_id = %s;
@@ -305,7 +303,7 @@ SELECT MAX(p_id) FROM Patient;
 
 create_visit = """
 BEGIN;
-INSERT INTO Visit ( p_id, admit_date, dis_date)
+INSERT INTO Visit ( p_id, admit_date, discharge_date)
 VALUES (%s, %s, %s);
 COMMIT;
 """
@@ -326,7 +324,7 @@ WHERE v_id = (%s);
 update_visit_info = """
 BEGIN;
 UPDATE  Visit SET
-(p_id, admit_date, dis_date)
+(p_id, admit_date, discharge_date)
 = (%s, %s, %s)
 WHERE v_id = (%s);
 COMMIT;
@@ -366,7 +364,16 @@ COMMIT;
 update_admission_discharge_null = """
 BEGIN;
 UPDATE  Admission SET
-(re_id, v_id, room_id, admit_date)
+(re_id, v_id, ro_id, admit_date)
+= (%s, %s, %s, %s)
+WHERE ad_id =(%s);
+COMMIT;
+"""
+
+update_admission_discharge_null = """
+BEGIN;
+UPDATE  Admission SET
+(re_id, v_id, ro_id, admit_date)
 = (%s, %s, %s, %s)
 WHERE ad_id =(%s);
 COMMIT;
@@ -384,6 +391,14 @@ INSERT INTO admission (re_id, v_id, room_id, admit_date, dis_date)
 VALUES (%s, %s, %s, %s, %s);
 COMMIT;
 """
+
+create_admission_discharge_null ="""
+BEGIN;
+INSERT INTO Admission (re_id, v_id, ro_id, admit_date)
+VALUES (%s, %s, %s, %s);
+COMMIT;
+"""
+
 get_max_ad_id = """
 SELECT MAX(ad_id) FROM admission;
 """
@@ -412,15 +427,15 @@ COMMIT;
 
 get_consultation_info = """
 SELECT *
-FROM consultation
-WHERE (d_id, date, time) = (%s, %s, %s);
+FROM Consultation
+WHERE (d_id, cons_date, cons_time) = (%s, %s, %s);
 """
 
 update_consultation_info = """
 BEGIN;
-UPDATE Consultation SET (d_id, re_id, v_id, date, time)
+UPDATE Consultation SET (d_id, re_id, v_id, cons_date, cons_time)
 = (%s, %s, %s, %s, %s)
-WHERE (d_id, date, time) = (%s, %s, %s);
+WHERE (d_id, cons_date, cons_time) = (%s, %s, %s);
 COMMIT;
 """
 
@@ -434,13 +449,13 @@ COMMIT;
 
 create_consultation = """
 BEGIN;
-INSERT INTO Consultation (d_id, re_id, v_id, date, time)
+INSERT INTO Consultation (d_id, re_id, v_id, cons_date, cons_time)
 VALUES (%s, %s, %s, %s, %s);
 COMMIT;
 """
 
 delete_consultation = """
 BEGIN;
-DELETE FROM Consultation WHERE (d_id, date, time)= (%s, %s, %s);
+DELETE FROM Consultation WHERE (d_id, re_id, cons_date, cons_time)= (%s, %s, %s, %s);
 COMMIT;
 """

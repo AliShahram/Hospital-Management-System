@@ -156,6 +156,7 @@ class Database(Tools):
             id = self.get_recent_emp_id()
             param = self.process_form_sorted(form)
             param.insert(0, id)
+            print(param)
 
             INSERT_RECEP = register_new_recep
 
@@ -272,8 +273,9 @@ class Database(Tools):
     def get_patient_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_patient_info
+        p_id = param[0]
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_param(SELECT_STATEMENT, p_id)
             if result == None:
                 message = "No such patient exists"
             else:
@@ -341,6 +343,7 @@ class Database(Tools):
     def get_visit_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_visit_info
+        v_id = param[0]
         try:
             result = self.execute_select_param(SELECT_STATEMENT, v_id)
             if result == None:
@@ -430,6 +433,7 @@ class Database(Tools):
         param.pop()
         param.append(v_id)
         INSERT_STATEMENT = update_visit_info
+        print(param[-1])
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
@@ -609,7 +613,10 @@ class Database(Tools):
 
     def get_consultation_info(self, form):
         param = self.process_form(form)
-
+        print(param)
+        print(len(param))
+        print(type(param))
+        print(tuple(param))
         SELECT_STATEMENT = get_consultation_info
         try:
             result = self.execute_select_param(SELECT_STATEMENT, tuple(param))

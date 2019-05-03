@@ -6,9 +6,10 @@ CREATE_ALL = """
     BEGIN;
 
     CREATE TABLE employee (
-        e_id  SERIAL PRIMARY KEY,
+        e_id  SERIAL,
         type  VARCHAR(1),
-        e_status  VARCHAR(1)
+        e_status  VARCHAR(1),
+        PRIMARY KEY(e_id)
     );
 
 
@@ -72,6 +73,7 @@ CREATE_ALL = """
 
 
     CREATE TABLE admission(
+        ad_id SERIAL,
         re_id INT,
         v_id INT,
         room_id INT,
@@ -100,9 +102,9 @@ CREATE_ALL = """
         d_id INT,
         re_id INT,
         v_id INT,
-        date DATE,
-        time TIME,
-        PRIMARY KEY (d_id, date, time),
+        cons_date DATE,
+        cons_time TIME,
+        PRIMARY KEY (d_id, cons_date, cons_time),
         FOREIGN KEY (re_id) REFERENCES receptionist(re_id),
         FOREIGN KEY (v_id) REFERENCES visit(v_id)
     );
