@@ -456,6 +456,6 @@ COMMIT;
 
 delete_consultation = """
 BEGIN;
-DELETE FROM Consultation WHERE (d_id, re_id, cons_date, cons_time)= (%s, %s, %s, %s);
+DELETE FROM Consultation WHERE (d_id, cons_date, cons_time)= (%s, %s, %s);
 COMMIT;
 """
