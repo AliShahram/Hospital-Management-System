@@ -63,24 +63,24 @@ class Database(Tools):
         return result
 
     def execute_select_param(self, statement, param):
-        self.cursor.execute(statement, param)
+        self.cursor.execute(statement, [param])
         row = self.cursor.fetchone()
         return row
 
 
     def execute_insert(self, statement, param):
-        self.cursor.execute(statement, param)
+        self.cursor.execute(statement, [param])
         return
 
 
     def execute_select_param(self, statement, param):
-        self.cursor.execute(statement, param)
+        self.cursor.execute(statement, [param])
         row = self.cursor.fetchone()
         return row
 
 
     def execute_insert(self, statement, param):
-        self.cursor.execute(statement, param)
+        self.cursor.execute(statement, [param])
         return
 
 
@@ -95,7 +95,7 @@ class Database(Tools):
 
     def execute_fetchall(self, statement, param):
         result = []
-        self.cursor.execute(statement, param)
+        self.cursor.execute(statement, [param])
         rows = self.cursor.fetchall()
         for i in rows:
             result.append(i[0])
