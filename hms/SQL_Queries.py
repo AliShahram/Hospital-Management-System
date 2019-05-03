@@ -364,7 +364,7 @@ COMMIT;
 update_admission_discharge_null = """
 BEGIN;
 UPDATE  Admission SET
-(re_id, v_id, ro_id, admit_date)
+(re_id, v_id, room_id, admit_date)
 = (%s, %s, %s, %s)
 WHERE ad_id =(%s);
 COMMIT;
@@ -373,7 +373,7 @@ COMMIT;
 update_admission_discharge_null = """
 BEGIN;
 UPDATE  Admission SET
-(re_id, v_id, ro_id, admit_date)
+(re_id, v_id, room_id, admit_date)
 = (%s, %s, %s, %s)
 WHERE ad_id =(%s);
 COMMIT;
@@ -394,7 +394,7 @@ COMMIT;
 
 create_admission_discharge_null ="""
 BEGIN;
-INSERT INTO Admission (re_id, v_id, ro_id, admit_date)
+INSERT INTO Admission (re_id, v_id, room_id, admit_date)
 VALUES (%s, %s, %s, %s);
 COMMIT;
 """

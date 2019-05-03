@@ -35,6 +35,18 @@ class Tools:
         return result
 
 
+    def process_form(self, form):
+        result = []
+        count = 0
+        for key, value in form.items():
+            if count != 0 and key != 'button':
+                result.append(value)
+            count += 1
+        result = list(map(lambda s: s.strip(), result))
+        return result
+
+
+
 class Database(Tools):
     """ Connection to the database and running
         sql queries """
@@ -56,8 +68,15 @@ class Database(Tools):
         row = self.cursor.fetchone()
         return row
 
+    def execute_select_multi_param(self, statement, param):
+        param = list(param)
+        self.cursor.execute(statement, param)
+        row = self.cursor.fetchone()
+        return row
+
 
     def execute_insert(self, statement, param):
+
         self.cursor.execute(statement, param)
         return
 
@@ -154,9 +173,8 @@ class Database(Tools):
         success = self.register_new_employee('r')
         if success == True:
             id = self.get_recent_emp_id()
-            param = self.process_form_sorted(form)
+            param = self.process_form(form)
             param.insert(0, id)
-            print(param)
 
             INSERT_RECEP = register_new_recep
 
@@ -172,7 +190,7 @@ class Database(Tools):
 
 
     def get_employee_info(self, form):
-        param = self.process_form_sorted(form)
+        param = self.process_form(form)
         e_id = param[0]
         emp_type = self.ident_employee_type(e_id)
 
@@ -225,9 +243,10 @@ class Database(Tools):
         param = self.process_form(form)
         INSERT_STATEMENT = register_patient
         SERIAL_GET_STATEMENT = get_max_p_id
+
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
-            p_id = str(self.execute_select_param(SERIAL_GET_STATEMENT,param)[0])
+            p_id = str(self.execute_select_param(SERIAL_GET_STATEMENT,param[0]))
             result = "Insertion Successful. Patient ID is " + p_id
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
@@ -323,8 +342,12 @@ class Database(Tools):
         SERIAL_GET_STATEMENT = get_max_v_id
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
+            v_id = str(self.execute_select_param(SERIAL_GET_STATEMENT,param)[0])
+            result = "Visit created. Visit id is " + v_id
+        except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
+
 
     def get_room_info(self, form):
         param = self.process_form_sorted(form)
@@ -431,9 +454,14 @@ class Database(Tools):
         param = self.process_form(form)
         v_id = param.pop(0)
         param.pop()
+        discharge_date = param[-1]
+        if discharge_date == '' or discharge_date == "yyyy-mm-dd" or 'None':
+            print(param)
+            param.pop()
+            INSERT_STATEMENT = update_visit_discharge_null
+        else:
+            INSERT_STATEMENT = update_visit_info
         param.append(v_id)
-        INSERT_STATEMENT = update_visit_info
-        print(param[-1])
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
@@ -472,7 +500,6 @@ class Database(Tools):
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
-
 
     def get_admission_info(self, form):
         param = self.process_form(form)
@@ -550,7 +577,7 @@ class Database(Tools):
         param = self.process_form(form)
         SELECT_STATEMENT = get_appointment_info
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_multi_param(SELECT_STATEMENT, param)
             if result == None:
                 message = "No such appointment exists"
             else:
@@ -613,13 +640,10 @@ class Database(Tools):
 
     def get_consultation_info(self, form):
         param = self.process_form(form)
-        print(param)
-        print(len(param))
-        print(type(param))
-        print(tuple(param))
+
         SELECT_STATEMENT = get_consultation_info
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, tuple(param))
+            result = self.execute_select_multi_param(SELECT_STATEMENT, param)
             if result == None:
                 message = "No such consultation exists"
             else:
@@ -827,7 +851,7 @@ class Database(Tools):
     def update_consultation_info(self, form):
         param = self.process_form(form)
         param.pop()
-        pk = [param[0]] + param[2:4]
+        pk = [param[0]] + param[3:5]
         param = param + pk
         INSERT_STATEMENT = update_consultation_info
         try:
