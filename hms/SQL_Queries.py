@@ -117,13 +117,11 @@ create_room = """
 """
 
 insert_operation = """
-
         INSERT INTO operation (name, cost, room_id)
         VALUES (%s, %s, %s);
 """
 
 insert_medicine = """
-
         INSERT INTO medicine (name, cost)
         VALUES (%s, %s);
 """
