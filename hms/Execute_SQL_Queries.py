@@ -840,7 +840,7 @@ class Database(Tools):
     def delete_consultation(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = delete_consultation
-        pk = [param[0]] + param[2:4]
+        pk = [param[0]] + param[3:5]
         try:
             self.cursor.execute(INSERT_STATEMENT, pk)
             result = "Delete Successful"
