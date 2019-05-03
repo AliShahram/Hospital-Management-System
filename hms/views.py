@@ -337,7 +337,7 @@ def Update_Medical_Info(request):
             message = db.delete_room(request.POST)
 
     context = {'message':message}
-    return render(request, 'hms/admin_logistics.html', context)
+    return render(request, 'hms/admin_medicine.html', context)
 
 
 
