@@ -392,7 +392,12 @@ def register_operation(request):
     if request.GET:
         message = None
 
-    context = {'message':message}
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     return render(request, 'hms/doctor.html', context)
     #return redirect('/DoctorHomePage', context)
 
@@ -405,7 +410,12 @@ def register_prescription(request):
     if request.GET:
         message = None
 
-    context = {'message':message}
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     return render(request, 'hms/doctor.html', context)
     #return redirect('DoctorHomePage', message)
 
@@ -418,7 +428,12 @@ def register_testing(request):
     if request.GET:
         message = None
 
-    context = {'message':message}
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     return render(request, 'hms/doctor.html', context)
     #return redirect('/DoctorHomePage', context)
 
@@ -426,7 +441,13 @@ def get_medical_history(request):
 
     if request.POST:
         p_operation, p_prescription, p_test, message = db.get_medical_history(request.POST)
-    context = {'p_operation':p_operation, 'p_prescription': p_prescription, 'p_test': p_test, 'message':message}
+
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'p_operation':p_operation, 'p_prescription': p_prescription, 'p_test': p_test, 'message':message, 'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     #return redirect('/DoctorHomePage', context_history)
     return render(request, 'hms/doctor.html', context)
 
