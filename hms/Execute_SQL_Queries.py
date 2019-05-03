@@ -178,6 +178,7 @@ class Database(Tools):
             id = self.get_recent_emp_id()
             param = self.process_form(form)
             param.insert(0, id)
+            print(param)
 
             INSERT_RECEP = register_new_recep
 
@@ -294,11 +295,10 @@ class Database(Tools):
 
     def get_patient_info(self, form):
         param = self.process_form(form)
-        print(param)
-        print(type(param))
         SELECT_STATEMENT = get_patient_info
+        p_id = param[0]
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_param(SELECT_STATEMENT, p_id)
             if result == None:
                 message = "No such patient exists"
             else:
@@ -337,7 +337,12 @@ class Database(Tools):
 
     def create_visit(self, form):
         param = self.process_form(form)
-        INSERT_STATEMENT = create_visit
+        discharge_date = param[-1]
+        if discharge_date == '' or discharge_date == "yyyy-mm-dd" or 'None':
+            param.pop()
+            INSERT_STATEMENT = create_visit_discharge_null
+        else:
+            INSERT_STATEMENT = create_visit
         SERIAL_GET_STATEMENT = get_max_v_id
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
@@ -346,7 +351,6 @@ class Database(Tools):
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while inserting into PostgreSQL table", error)
         return result
-
 
     def get_room_info(self, form):
         param = self.process_form_sorted(form)
@@ -365,8 +369,9 @@ class Database(Tools):
     def get_visit_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_visit_info
+        v_id = param[0]
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_param(SELECT_STATEMENT, v_id)
             if result == None:
                 message = "No such visit exists"
             else:
@@ -454,6 +459,7 @@ class Database(Tools):
         param.pop()
         param.append(v_id)
         INSERT_STATEMENT = update_visit_info
+        print(param[-1])
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
@@ -476,6 +482,13 @@ class Database(Tools):
     def create_admission(self, form):
         param = self.process_form(form)
         INSERT_STATEMENT = create_admission
+        discharge_date = param[-1]
+        if discharge_date == '' or discharge_date == "yyyy-mm-dd" or 'None':
+            param.pop()
+            print(param)
+            INSERT_STATEMENT = create_admission_discharge_null
+        else:
+            INSERT_STATEMENT = create_admission
         SERIAL_GET_STATEMENT = get_max_ad_id
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
@@ -489,8 +502,9 @@ class Database(Tools):
     def get_admission_info(self, form):
         param = self.process_form(form)
         SELECT_STATEMENT = get_admission_info
+        ad_id = param[0]
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_param(SELECT_STATEMENT, ad_id)
 
             if result == None:
                 message = "No such admission exists"
@@ -522,8 +536,13 @@ class Database(Tools):
         param = self.process_form(form)
         ad_id = param.pop(0)
         param.pop()
+        discharge_date = param[-1]
+        if discharge_date == '' or discharge_date == "yyyy-mm-dd" or 'None':
+            param.pop()
+            INSERT_STATEMENT = update_admission_discharge_null
+        else:
+            INSERT_STATEMENT = update_admission_info
         param.append(ad_id)
-        INSERT_STATEMENT = update_admission_info
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"
@@ -621,10 +640,13 @@ class Database(Tools):
 
     def get_consultation_info(self, form):
         param = self.process_form(form)
-
+        print(param)
+        print(len(param))
+        print(type(param))
+        print(tuple(param))
         SELECT_STATEMENT = get_consultation_info
         try:
-            result = self.execute_select_param(SELECT_STATEMENT, param)
+            result = self.execute_select_param(SELECT_STATEMENT, tuple(param))
             if result == None:
                 message = "No such consultation exists"
             else:
