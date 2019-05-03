@@ -37,6 +37,7 @@
           <div class="box">
             <form class="form-group" action="{% url 'Create_Consultation' %}" method="post">{% csrf_token %}
               Doctor ID: <input class="form-control" type="text" name="d_id" value=""><br>
+              Receptionist ID: <input class="form-control" type="text" name="re_id" value=""><br>
               Visit ID: <input class="form-control" type="text" name="v_id" value=""><br>
               Date: <input class="form-control" type="text" name="cons_date" value="yyyy-mm-dd"><br>
               Time: <input class="form-control" type="text" name="cons_time" value="hh:mm:ss"><br>
@@ -62,9 +63,10 @@
           {% csrf_token %}
           <input class="form-control" type="hidden" name="d_id" value="{{querySet.0}}"><br>
           Doctor ID: <input class="form-control" type="text" name="d_id" value="{{querySet.0}}"><br>
-          Visit ID: <input class="form-control" type="text" name="v_id" value="{{querySet.1}}"><br>
-          Date: <input class="form-control" type="text" name="cons_date" value="{{querySet.2}}"><br>
-          Time: <input class="form-control" type="text" name="cons_time" value="{{querySet.3}}"><br>
+          Receptionist ID: <input class="form-control" type="text" name="re_id" value="{{querySet.1}}"><br>
+          Visit ID: <input class="form-control" type="text" name="v_id" value="{{querySet.2}}"><br>
+          Date: <input class="form-control" type="text" name="cons_date" value="{{querySet.3}}"><br>
+          Time: <input class="form-control" type="text" name="cons_time" value="{{querySet.4}}"><br>
 
           <button class="alert alert-danger" type="submit" name="Update">Update</button>
           <button class="alert alert-danger" type="submit" name="Delete">Delete Consultation</button>

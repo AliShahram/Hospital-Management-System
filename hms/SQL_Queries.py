@@ -310,6 +310,13 @@ VALUES (%s, %s, %s);
 COMMIT;
 """
 
+create_visit_discharge_null = """
+BEGIN;
+INSERT INTO Visit (p_id, admit_date)
+VALUES (%s, %s);
+COMMIT;
+"""
+
 get_visit_info = """
 SELECT *
 FROM Visit
@@ -336,44 +343,60 @@ SELECT MAX(v_id) FROM Visit;
 
 get_admission_info = """
 SELECT *
-FROM Admission
+FROM admission
 WHERE ad_id = (%s);
 """
 
 update_admission_info = """
 BEGIN;
+UPDATE  admission SET
+(re_id, v_id, room_id, admit_date)
+= (%s, %s, %s, %s)
+WHERE ad_id =(%s);
+COMMIT;
+"""
+
+create_admission_discharge_null ="""
+BEGIN;
+INSERT INTO Admission (re_id, v_id, room_id, admit_date)
+VALUES (%s, %s, %s, %s);
+COMMIT;
+"""
+
+update_admission_discharge_null = """
+BEGIN;
 UPDATE  Admission SET
-(re_id, v_id, ro_id, admit_date, dis_date)
-= (%s, %s, %s, %s, %s)
+(re_id, v_id, room_id, admit_date)
+= (%s, %s, %s, %s)
 WHERE ad_id =(%s);
 COMMIT;
 """
 
 delete_admission = """
 BEGIN;
-DELETE FROM Admission WHERE ad_id = (%s);
+DELETE FROM admission WHERE ad_id = (%s);
 COMMIT;
 """
 
 create_admission ="""
 BEGIN;
-INSERT INTO Admission (re_id, v_id, ro_id, admit_date, dis_date)
+INSERT INTO admission (re_id, v_id, room_id, admit_date, dis_date)
 VALUES (%s, %s, %s, %s, %s);
 COMMIT;
 """
 get_max_ad_id = """
-SELECT MAX(ad_id) FROM Admission;
+SELECT MAX(ad_id) FROM admission;
 """
 
 get_appointment_info = """
 SELECT *
-FROM Appointment
+FROM appointment
 WHERE (d_id, ap_date, ap_time) = (%s, %s, %s);
 """
 
 update_appointment_info = """
 BEGIN;
-UPDATE  Appointment SET
+UPDATE  appointment SET
 (re_id, v_id, d_id, ap_date, ap_time)
 = (%s, %s, %s, %s, %s)
 WHERE (d_id, ap_date, ap_time)= (%s, %s, %s);
@@ -382,22 +405,22 @@ COMMIT;
 
 delete_appointment = """
 BEGIN;
-DELETE FROM Appointment WHERE (d_id, ap_date, ap_time)= (%s, %s, %s);
+DELETE FROM appointment WHERE (d_id, ap_date, ap_time)= (%s, %s, %s);
 COMMIT;
 """
 
 
 get_consultation_info = """
 SELECT *
-FROM Consultation
-WHERE (d_id,cons_date, cons_time) = (%s, %s, %s);
+FROM consultation
+WHERE (d_id, date, time) = (%s, %s, %s);
 """
 
 update_consultation_info = """
 BEGIN;
-UPDATE Consultation SET (d_id, v_id, cons_date, cons_time)
-= (%s, %s, %s, %s)
-WHERE (d_id, cons_date, cons_time) = (%s, %s, %s);
+UPDATE Consultation SET (d_id, re_id, v_id, date, time)
+= (%s, %s, %s, %s, %s)
+WHERE (d_id, date, time) = (%s, %s, %s);
 COMMIT;
 """
 
@@ -411,13 +434,13 @@ COMMIT;
 
 create_consultation = """
 BEGIN;
-INSERT INTO Consultation (d_id, v_id, cons_date, cons_time)
-VALUES (%s, %s, %s, %s);
+INSERT INTO Consultation (d_id, re_id, v_id, date, time)
+VALUES (%s, %s, %s, %s, %s);
 COMMIT;
 """
 
 delete_consultation = """
 BEGIN;
-DELETE FROM Consultation WHERE (d_id, cons_date, cons_time)= (%s, %s, %s);
+DELETE FROM Consultation WHERE (d_id, date, time)= (%s, %s, %s);
 COMMIT;
 """

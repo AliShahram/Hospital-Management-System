@@ -74,10 +74,11 @@ CREATE_ALL = """
     CREATE TABLE admission(
         re_id INT,
         v_id INT,
-        ro_id INT,
+        room_id INT,
         admit_date date,
         dis_date date,
-        PRIMARY KEY (ro_id, admit_date),
+        PRIMARY KEY (room_id, admit_date),
+        FOREIGN KEY (room_id) REFERENCES room(room_id),
         FOREIGN KEY (v_id) REFERENCES visit(v_id),
         FOREIGN KEY (re_id)  REFERENCES receptionist(re_id)
     );
