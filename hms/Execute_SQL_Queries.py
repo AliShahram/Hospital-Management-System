@@ -35,18 +35,6 @@ class Tools:
         return result
 
 
-    def process_form(self, form):
-        result = []
-        count = 0
-        for key, value in form.items():
-            if count != 0 and key != 'button':
-                result.append(value)
-            count += 1
-        result = list(map(lambda s: s.strip(), result))
-        return result
-
-
-
 class Database(Tools):
     """ Connection to the database and running
         sql queries """
@@ -62,16 +50,6 @@ class Database(Tools):
         result = row[0]
         return result
 
-    def execute_select_param(self, statement, param):
-        self.cursor.execute(statement, [param])
-        row = self.cursor.fetchone()
-        return row
-
-
-    def execute_insert(self, statement, param):
-        self.cursor.execute(statement, [param])
-        return
-
 
     def execute_select_param(self, statement, param):
         self.cursor.execute(statement, [param])
@@ -80,7 +58,7 @@ class Database(Tools):
 
 
     def execute_insert(self, statement, param):
-        self.cursor.execute(statement, [param])
+        self.cursor.execute(statement, param)
         return
 
 
@@ -155,7 +133,7 @@ class Database(Tools):
         success = self.register_new_employee('d')
         if success == True:
             id = self.get_recent_emp_id()
-            param = self.process_form(form)
+            param = self.process_form_sorted(form)
             param.insert(0, id)
 
             INSERT_DOCTOR = register_new_doctor
@@ -176,7 +154,7 @@ class Database(Tools):
         success = self.register_new_employee('r')
         if success == True:
             id = self.get_recent_emp_id()
-            param = self.process_form(form)
+            param = self.process_form_sorted(form)
             param.insert(0, id)
             print(param)
 
@@ -194,7 +172,7 @@ class Database(Tools):
 
 
     def get_employee_info(self, form):
-        param = self.process_form(form)
+        param = self.process_form_sorted(form)
         e_id = param[0]
         emp_type = self.ident_employee_type(e_id)
 
@@ -216,7 +194,6 @@ class Database(Tools):
     def delete_employee(self, form):
         param = self.process_form(form)
         e_id = param[0]
-        print(e_id)
         emp_type = self.ident_employee_type(e_id)
 
         DELETE_STATEMENT = delete_employee
@@ -548,8 +525,6 @@ class Database(Tools):
             result = "Update Successful"
         except (Exception, pg2.DatabaseError) as error:
             result = ("Error while updating  PostgreSQL table", error)
-        print(param)
-        print(len(param))
         return result
 
     def delete_admission(self, form):
@@ -745,7 +720,6 @@ class Database(Tools):
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Insertion Successful"
         except (Exception, pg2.DatabaseError) as error:
-            print(error)
             result = ("Error while inserting into PostgreSQL table", error)
         return result
 
@@ -858,8 +832,6 @@ class Database(Tools):
         pk = [param[0]] + param[2:4]
         param = param + pk
         INSERT_STATEMENT = update_consultation_info
-        print(param)
-        print(type(param))
         try:
             self.cursor.execute(INSERT_STATEMENT, param)
             result = "Update Successful"

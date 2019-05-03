@@ -22,8 +22,8 @@ def Admin_Logistics(request):
 
 def HomePage(request):
     e_id = request.GET.get('e_id')
-    status = db.validate_employee(e_id)
-    if status is True:
+    try:
+        status = db.validate_employee(e_id)
         employee_type = db.ident_employee_type(e_id)
         if employee_type:
             if employee_type == 'd':
@@ -32,7 +32,7 @@ def HomePage(request):
                 return render(request, 'hms/receptionist/receptionist_patient.html')
             elif employee_type == 'a':
                 return render(request, 'hms/admin_staff.html')
-    else:
+    except TypeError:
         message = 'Employee not registered or inactive'
         context = {'message':message}
         return render(request, 'hms/login.html', context )
@@ -337,7 +337,7 @@ def Update_Medical_Info(request):
             message = db.delete_room(request.POST)
 
     context = {'message':message}
-    return render(request, 'hms/admin_logistics.html', context)
+    return render(request, 'hms/admin_medicine.html', context)
 
 
 
@@ -380,7 +380,7 @@ def Register_Doctor(request):
         message = None
 
     context = {'message':message}
-    return render(request, 'hms/admin.html', context)
+    return render(request, 'hms/admin_staff.html', context)
 
 
 def register_operation(request):
@@ -392,7 +392,12 @@ def register_operation(request):
     if request.GET:
         message = None
 
-    context = {'message':message}
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     return render(request, 'hms/doctor.html', context)
     #return redirect('/DoctorHomePage', context)
 
@@ -405,7 +410,12 @@ def register_prescription(request):
     if request.GET:
         message = None
 
-    context = {'message':message}
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     return render(request, 'hms/doctor.html', context)
     #return redirect('DoctorHomePage', message)
 
@@ -418,7 +428,12 @@ def register_testing(request):
     if request.GET:
         message = None
 
-    context = {'message':message}
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     return render(request, 'hms/doctor.html', context)
     #return redirect('/DoctorHomePage', context)
 
@@ -426,7 +441,13 @@ def get_medical_history(request):
 
     if request.POST:
         p_operation, p_prescription, p_test, message = db.get_medical_history(request.POST)
-    context = {'p_operation':p_operation, 'p_prescription': p_prescription, 'p_test': p_test, 'message':message}
+
+    medicine = db.get_medicine_name()
+    operation = db.get_operation_name()
+    testing = db.get_test_name()
+    context = {'p_operation':p_operation, 'p_prescription': p_prescription, 'p_test': p_test, 'message':message, 'message':message, 'medicine': medicine,
+    "operation": operation,
+    "testing": testing}
     #return redirect('/DoctorHomePage', context_history)
     return render(request, 'hms/doctor.html', context)
 

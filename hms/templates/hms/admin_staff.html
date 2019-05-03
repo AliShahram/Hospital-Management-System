@@ -30,13 +30,13 @@
         <h6>Register Doctor</h6>
         <form class="form-group" action="Register_Doctor" method="post">
           {% csrf_token %}
-          First Name: <input class="form-control" type="text" name="f_name" value=""><br>
-          Last Name: <input class="form-control" type="text" name="l_name" value=""><br>
-          DOB: <input class="form-control" type="text" name="dob" value="yyyy-mm-dd"><br>
-          Address: <input class="form-control" type="text" name="address" value=""><br>
-          Email: <input class="form-control" type="text" name="email" value=""><br>
-          Phone: <input class="form-control" type="text" name="phone" value=""><br>
-          Consultation Fee: <input class="form-control" type="text" name="consult_fee" value=""><br>
+          First Name: <input class="form-control" type="text" name="1f_name" value=""><br>
+          Last Name: <input class="form-control" type="text" name="2l_name" value=""><br>
+          DOB: <input class="form-control" type="text" name="3dob" value="yyyy-mm-dd"><br>
+          Address: <input class="form-control" type="text" name="4address" value=""><br>
+          Email: <input class="form-control" type="text" name="5email" value=""><br>
+          Phone: <input class="form-control" type="text" name="6phone" value=""><br>
+          Consultation Fee: <input class="form-control" type="text" name="7consult_fee" value=""><br>
           <button class="alert alert-danger" type="submit" name="button">Submit</button>
         </form>
       </div>
@@ -46,12 +46,12 @@
         <h6>Register Receptionist</h6>
         <form class="form-group" action="Register_Recep" method="post">
           {% csrf_token %}
-          First Name: <input class="form-control" type="text" name="f_name" value=""><br>
-          Last Name: <input class="form-control" type="text" name="l_name" value=""><br>
-          DOB: <input class="form-control" type="text" name="dob" value="yyyy-mm-dd"><br>
-          Address: <input class="form-control" type="text" name="address" value=""><br>
-          Email: <input class="form-control" type="text" name="email" value=""><br>
-          Phone: <input class="form-control" type="text" name="phone" value=""><br>
+          First Name: <input class="form-control" type="text" name="1f_name" value=""><br>
+          Last Name: <input class="form-control" type="text" name="2l_name" value=""><br>
+          DOB: <input class="form-control" type="text" name="3dob" value="yyyy-mm-dd"><br>
+          Address: <input class="form-control" type="text" name="4address" value=""><br>
+          Email: <input class="form-control" type="text" name="5email" value=""><br>
+          Phone: <input class="form-control" type="text" name="6phone" value=""><br>
           <button class="alert alert-danger" type="submit" name="button">Submit</button>
         </form>
       </div>
@@ -61,7 +61,7 @@
         <h6>Update Employee Information</h6>
         <form class="form-group" action="Get_Employee_Info" method="post">
           {% csrf_token %}
-          Employee ID: <input class="form-control" type="text" name="e_id" value=""><br>
+          Employee ID: <input class="form-control" type="text" name="1e_id" value=""><br>
           <button class="alert alert-danger" type="submit" name="button">Submit</button>
         </form>
       </div>

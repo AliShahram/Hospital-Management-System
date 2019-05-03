@@ -37,7 +37,7 @@ register_new_doctor = """
 
 
 register_new_recep = """
-        INSERT INTO receptionist (r_id,
+        INSERT INTO receptionist (re_id,
                             f_name,
                             l_name,
                             dob,
@@ -73,7 +73,7 @@ get_doctor_info = """
 
 get_receptionist_info = """
     SELECT * FROM receptionist
-    WHERE r_id = %s;
+    WHERE re_id = %s;
     """
 
 update_doctor_info = """
@@ -98,7 +98,7 @@ update_receptionist_info = """
         address,
         email,
         phone) = (%s, %s, %s, %s, %s, %s)
-    WHERE r_id = %s;
+    WHERE re_id = %s;
     """
 
 
