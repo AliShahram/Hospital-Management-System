@@ -35,18 +35,6 @@ class Tools:
         return result
 
 
-    def process_form(self, form):
-        result = []
-        count = 0
-        for key, value in form.items():
-            if count != 0 and key != 'button':
-                result.append(value)
-            count += 1
-        result = list(map(lambda s: s.strip(), result))
-        return result
-
-
-
 class Database(Tools):
     """ Connection to the database and running
         sql queries """
@@ -166,7 +154,7 @@ class Database(Tools):
         success = self.register_new_employee('r')
         if success == True:
             id = self.get_recent_emp_id()
-            param = self.process_form(form)
+            param = self.process_form_sorted(form)
             param.insert(0, id)
 
             INSERT_RECEP = register_new_recep
@@ -183,7 +171,7 @@ class Database(Tools):
 
 
     def get_employee_info(self, form):
-        param = self.process_form(form)
+        param = self.process_form_sorted(form)
         e_id = param[0]
         emp_type = self.ident_employee_type(e_id)
 
